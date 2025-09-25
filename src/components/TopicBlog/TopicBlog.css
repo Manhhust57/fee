@@ -1,0 +1,219 @@
+.event-wrapper {
+    margin-top: 50px;
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.event-container {
+    position: relative;
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+    padding: 0;
+    /* Xóa padding */
+}
+
+.event-slide {
+    position: relative;
+}
+
+.event-image {
+    width: 385px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    height: 188px;
+    object-fit: cover;
+}
+
+.event-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.event-title-main {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.nav-button {
+    position: absolute;
+    top: 70%;
+    transform: translateY(-50%);
+    width: 40px !important;
+    height: 40px !important;
+    background-color: rgba(128, 128, 128, 0.7) !important;
+    border: none !important;
+    z-index: 2;
+}
+
+.nav-button:hover {
+    background-color: rgba(128, 128, 128, 0.9) !important;
+}
+
+.nav-button-prev {
+    left: -20px;
+    z-index: 1;
+}
+
+.nav-button-next {
+    right: -5px;
+    z-index: 1;
+}
+
+/* Override ant-design carousel styles */
+.ant-carousel {
+    width: 100%;
+}
+
+.ant-carousel .slick-slide {
+    padding: 0;
+    /* Giảm từ 10px xuống 5px */
+}
+
+.ant-carousel .slick-list {
+    margin: 0 -5px;
+    /* Giảm từ -10px xuống -5px */
+}
+
+.ant-carousel .slick-track {
+    display: flex;
+    align-items: center;
+}
+
+
+@media (max-width: 1024px) {
+    .event-wrapper {
+        width: 100%;
+
+    }
+
+    .event-container {
+        margin: 0 auto;
+        max-width: 100%;
+        width: 1000px;
+    }
+
+    .event-image {
+        width: 330px;
+        height: 170px;
+    }
+
+    .event-title {
+        font-size: 20px;
+    }
+
+    .nav-button {
+        width: 35px !important;
+        height: 35px !important;
+    }
+
+    .nav-button-prev {
+        left: 5px;
+    }
+
+    .nav-button-next {
+        right: 5px;
+    }
+}
+
+/* Mobile (Dưới 768px) */
+@media (max-width: 768px) {
+    .event-wrapper {
+        margin-top: 30px;
+        width: 100%;
+        padding: 0;
+        max-width: 740px;
+
+    }
+
+    .event-image {
+        width: 100%;
+
+    }
+
+    .event-title {
+        font-size: 18px;
+    }
+
+    .nav-button {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    .nav-button-prev {
+        left: 5px;
+    }
+
+    .nav-button-next {
+        right: 5px;
+    }
+
+    .ant-carousel .slick-slide {
+        padding: 0 3px;
+    }
+
+    .ant-carousel .slick-list {
+        margin: 0 -3px;
+    }
+
+}
+
+/* Mobile nhỏ (Dưới 480px) */
+@media (max-width: 480px) {
+
+    .event-wrapper {
+        margin-top: 20px;
+        padding: 0 5px;
+
+    }
+
+    .event-image {
+        width: 100%;
+        height: 250px;
+        border-radius: 5px;
+    }
+
+    .event-title {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .nav-button {
+        display: none;
+    }
+
+    .ant-carousel .slick-slide {
+        padding: 0 2px;
+    }
+
+    .ant-carousel .slick-list {
+        margin: 0 -2px;
+    }
+
+    .event-container .ant-carousel .slick-list {
+        overflow: hidden;
+        /* Hide overflow to show only one image */
+    }
+
+    .event-container .ant-carousel .slick-track {
+        display: flex;
+        /* Align slides horizontally */
+        transition: transform 0.3s ease;
+        /* Smooth transition for sliding */
+    }
+
+    .event-title-main {
+        margin-left: 10px;
+    }
+
+    .event-title-main h1 {
+        font-size: 14px;
+    }
+
+    .event-title-main p {
+        font-size: 14px;
+    }
+}

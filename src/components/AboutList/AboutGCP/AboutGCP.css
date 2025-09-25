@@ -1,0 +1,190 @@
+.aboutgcp {
+  margin-top: 80px;
+}
+
+.banner-img1 {
+  position: relative;
+}
+
+.banner-desg {
+  color: white;
+  position: absolute;
+  bottom: 30px;
+  left: 18%;
+  font-size: 50px;
+  font-weight: 600;
+}
+
+.banner-img1 img {
+  width: 100%;
+  height: 297px;
+  object-fit: cover;
+  transition: filter 0.3s ease-in-out;
+  filter: brightness(50%);
+}
+
+.company-card {
+  margin: 0 auto; /* Center the card */
+  width: 80%; /* Increase the width */
+  padding: 20px; /* Add some padding */
+  font-size: 1.2em; /* Increase the font size */
+  background: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 10px auto;
+}
+
+.company-info p {
+  text-align: left;
+  font-weight: 500;
+  font-size: 20px;
+}
+.info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px 20px;
+  margin-top: 12px;
+  color: #333;
+}
+
+.header1 {
+  grid-column: 1 / -1; /* Span the header across the entire grid */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.company-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #7d4b32;
+}
+
+.website-link {
+  color: #d27d50;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+}
+
+.website-link:hover {
+  text-decoration: underline;
+}
+
+.label {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 150px; /* Ensure equal width for all labels */
+}
+
+.bold {
+  font-weight: bold;
+  color: #000;
+}
+
+.company-info {
+  background: #f8f8f8;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #a86b42;
+  margin-bottom: 10px;
+}
+
+.company-info p {
+  margin-bottom: 8px;
+  color: #333;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .aboutgcp {
+    margin-top: 100px;
+  }
+
+  .banner-desg {
+    font-size: 36px; /* Giảm kích thước font */
+    left: 10%;
+    bottom: 20px;
+  }
+
+  .company-card {
+    width: 90%; /* Cho chiều rộng lớn hơn */
+    font-size: 1em;
+    padding: 15px;
+  }
+
+  .company-info {
+    padding: 15px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr; /* Chuyển về 1 cột */
+    gap: 10px;
+  }
+
+  .label {
+    min-width: auto;
+    font-size: 16px;
+  }
+}
+
+/* Màn hình nhỏ hơn 480px (Điện thoại) */
+@media (max-width: 480px) {
+  .aboutgcp {
+    margin-top: 100px;
+  }
+  .banner-img1 img {
+    height: auto;
+  }
+
+  .banner-desg {
+    font-size: 28px;
+    left: 5%;
+    bottom: 15px;
+  }
+
+  .company-card {
+    width: 95%;
+    font-size: 0.9em;
+    padding: 10px;
+  }
+
+  .company-info {
+    max-width: 95%;
+    padding: 10px;
+  }
+  .company-info p {
+    font-size: 16px;
+    text-align: justify;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .label {
+    font-size: 16px;
+  }
+
+  .company-name {
+    font-size: 16px;
+  }
+
+  .website-link {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,576 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  z-index: 1000;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+  background-color: #ffffff;
+  backdrop-filter: blur(10px);
+  transition: height 0.3s ease;
+}
+.header1-logo {
+  width: 115px;
+  height: 80px;
+  object-fit: contain;
+  margin: 10px 0;     /* bỏ margin-left */
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.header-logo-container {
+  flex-shrink: 0;
+  order: 1;
+  margin-left: 5px;   /* cách trái 5px */
+  padding-left: 0;    /* bỏ padding dư */
+  transition: margin 0.3s ease, padding 0.3s ease;
+}
+.header-container {
+  display: flex;
+  width: 100%;
+  margin: 0;              /* bỏ căn giữa */
+  height: 90px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px 0 5px;  /* padding-left = 5px */
+  transition: height 0.3s ease, padding 0.3s ease;
+}
+.header-nav {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding-left: 0;
+  width: auto;
+  padding-top: 0;
+  align-items: center;
+  flex-shrink: 0;
+  transition: gap 0.3s ease;
+}
+.header-select {
+  display: flex;
+  gap: 40px;
+  justify-content: flex-end;
+  align-items: center; /* Ensure vertical alignment */
+  width: auto;
+  padding-left: 0;
+  padding-top: 0;
+  flex-shrink: 0;
+  order: 3;
+  margin-right: 20px; /* Thêm khoảng cách từ cạnh phải */
+  transition: gap 0.3s ease;
+}
+.header-nav-container {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  align-items: center;
+  z-index: 1000; /* Ensure it appears above the overlay */
+  gap: 30px;
+  flex-shrink: 0;
+  order: 2;
+  flex: 1;
+  justify-content: center;
+  margin-left: 80px; /* Tăng khoảng cách từ logo */
+  margin-right: 80px; /* Tăng khoảng cách đến menu bên phải */
+  transition: margin 0.3s ease, gap 0.3s ease;
+}
+.select-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.select-nav:hover {
+  background-color: #f8fafc;
+  transform: translateY(-1px);
+}
+.user-menu {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+.user-info {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  width: auto;
+  text-align: center;
+  padding: 12px;
+  margin-top: 8px;
+  display: none;
+  white-space: nowrap;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+.dropdown button {
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  color: #374151;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-align: left;
+}
+
+.dropdown button:hover {
+  background-color: #f8fafc;
+  color: #6366f1;
+  transform: translateX(4px);
+}
+
+.user-menu .dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  z-index: 10;
+  border: 1px solid #e5e7eb;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.user-menu.active .dropdown {
+  display: flex;
+  flex-direction: column; /* Ensure dropdown items stack vertically */
+  transition: all 0.3s ease;
+}
+
+.header-nav .ant-dropdown {
+  position: relative; /* Ensure dropdown is positioned relative to its parent */
+  margin-top: 0; /* Remove spacing to keep on same line */
+  width: auto; /* Allow dropdown to size naturally */
+  text-align: left; /* Align text to the left */
+  display: flex;
+  align-items: center;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.header-nav .ant-dropdown-menu {
+  position: absolute; /* Change to absolute for proper dropdown positioning */
+  margin-top: 0; /* Remove spacing to keep on same line */
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Ensure it appears above other elements */
+  overflow: hidden;
+  top: 100%;
+  left: 0;
+}
+
+.header-nav .ant-dropdown-menu-item {
+  padding: 10px 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 1px solid #f0f0f0;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.header-nav .ant-dropdown-menu-item:last-child {
+  border-bottom: none;
+}
+
+.header-nav .ant-dropdown-menu-item a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 10px 20px;
+  margin: -10px -20px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: left;
+  cursor: pointer;
+}
+
+.header-nav .ant-dropdown-menu-item:hover {
+  background-color: #f5f5f5;
+  color: #6366f1;
+  transform: translateX(5px);
+}
+
+.header-icon {
+  margin-right: 5px;
+  font-weight: 600;
+  color: #6366f1;
+  transition: all 0.3s ease;
+}
+
+.select-nav:hover .header-icon {
+  color: #4f46e5;
+  transform: scale(1.1);
+}
+
+.btn-login {
+  display: inline-block; /* Prevent block-level behavior */
+  text-align: center;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1;
+  vertical-align: middle;
+  color: white;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+}
+
+.btn-login:hover {
+  background: linear-gradient(135deg, #5b21b6, #7c3aed);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.user-info:hover {
+  color: #6366f1;
+  transform: translateY(-1px);
+}
+
+.header-nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  z-index: 999; /* Ensure it appears above other elements */
+  display: none; /* Hidden by default */
+}
+
+.header-nav-overlay.active {
+  display: block; /* Show when active */
+}
+
+@media (max-width: 1024px) {
+  .header-container {
+    width: 100%;
+    margin: 0;
+    padding: 0 20px 0 5px;
+    justify-content: space-between;
+  }
+
+  .header-nav {
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-left: 0;
+  }
+
+  .header-select {
+    width: auto;
+    padding-left: 0;
+    justify-content: right;
+  }
+  
+  .header-nav-container {
+    flex: 1;
+    justify-content: center;
+    margin-left: 60px; /* Giảm khoảng cách trên màn hình vừa */
+    margin-right: 60px;
+  }
+  
+  .header-logo-container {
+    margin-left: 5px;
+  }
+}
+
+/* Responsive cho màn hình nhỏ hơn 768px (Điện thoại) */
+@media (max-width: 768px) {
+  .header {
+    height: 70px;
+  }
+
+  .header1-logo {
+    width: 150px;
+    height: 70px;
+  }
+
+  .header-container {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    padding: 10px 15px 10px 5px;
+  }
+
+  .header-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 10px;
+  }
+  .header-nav::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #d3c3c3;
+    margin-top: 10px;
+  }
+
+  .header-select {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 10px;
+    gap: 10px;
+  }
+  
+  .header-nav-container {
+    margin-left: 0;
+    margin-right: 0; /* Reset margin trên mobile */
+  }
+  
+  .header-logo-container {
+    margin-left: 5px;
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 20px 10px 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header-logo-container {
+    flex: 1;
+    margin-left: 5px;
+    padding-left: 0;
+  }
+  
+  .header-nav-container {
+    display: none;
+    flex-direction: column-reverse;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    overflow: visible;
+    margin-left: 0;
+  }
+
+  .header-nav-container.active {
+    display: flex;
+  }
+  .hamburger {
+    margin-right: -5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    cursor: pointer;
+  }
+
+  .hamburger div {
+    width: 100%;
+    height: 3px;
+    background-color: #333;
+  }
+  .header1-logo {
+    float: left;
+  }
+}
+
+/* Responsive cho màn hình rất nhỏ (dưới 480px) */
+@media (max-width: 480px) {
+  .header {
+    height: auto; /* Cho phép header co giãn theo nội dung */
+    /* Thêm padding để đảm bảo dropdown hiển thị đúng */
+  }
+  .header-nav button {
+    background-color: #f6f6f6;
+  }
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .header-logo-container {
+    flex: 1;
+  }
+
+  .header-nav-container {
+    display: none;
+    flex-direction: column-reverse;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    overflow: visible;
+  }
+
+  /* Hiển thị menu khi active */
+  .header-nav-container.active {
+    display: flex;
+  }
+
+  /* Thiết lập cho hamburger */
+  .hamburger {
+    margin-right: -5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    cursor: pointer;
+  }
+
+  .hamburger div {
+    width: 100%;
+    height: 3px;
+    background-color: #333;
+  }
+
+  /* Các mục trong menu */
+  .dropdown-wrapper {
+    margin-top: 10px; /* Thêm khoảng cách để đẩy các phần tử khác xuống */
+  }
+
+  .dropdown-menu {
+    position: static; /* Đảm bảo dropdown nằm trong dòng chảy layout */
+    display: block; /* Đảm bảo nó không "nổi lên" */
+    padding: 0;
+    margin-top: 10px; /* Thêm một chút khoảng cách nếu cần */
+  }
+
+  .dropdown-submenu {
+    position: static; /* Đảm bảo menu không "nổi lên" */
+    display: block; /* Đảm bảo menu cấp 2 cũng chiếm không gian */
+    margin-left: 20px;
+    padding: 5px 0;
+  }
+
+  .dropdown-submenu-item {
+    padding: 6px 12px;
+    background-color: white;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Đảm bảo có đường viền ngăn cách */
+  }
+
+  /* Cấp 3 */
+  .dropdown-submenu ul {
+    position: static;
+    display: block;
+    max-height: 250px;
+    overflow-y: auto;
+  }
+  .dropdown-submenu-btn {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .dropdown-submenu-item {
+    list-style-type: none;
+  }
+}
+
+/* css active khi click chon trên menu*/
+.header-nav a {
+  text-decoration: none;
+  color: #374151;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  font-size: 15px;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.header-nav a:hover {
+  color: #6366f1;
+  background-color: #f8fafc;
+  transform: translateY(-1px);
+}
+
+.header-nav a.active {
+  font-weight: 700;
+  color: #6366f1;
+  background-color: #f0f4ff;
+  border-bottom: 2px solid #6366f1;
+}
+
+.dropdown-link {
+  color: #374151;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  font-size: 15px;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+.apartment-popup {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 10px); /* Sát ngay bên phải menu con */
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 12px;
+  z-index: 1000;
+  min-width: 240px;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.apartment-item {
+  display: block;
+  padding: 6px 10px;
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s;
+}
+
+.apartment-item:hover {
+  background-color: #f6f6f6;
+}

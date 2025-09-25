@@ -1,0 +1,303 @@
+/* CustomerInfoForm.css */
+
+.form-page-background {
+  background-color: #f0f2f5;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.form-container {
+  width: 1200px;
+  margin: 40px auto;
+  background: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 30px;
+  position: relative;
+  min-height: min-content;
+}
+
+.form-header {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.form-titleqr {
+  color: #2c3e50;
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+}
+
+.form-divider {
+  height: 2px;
+  background-color: #edf2f7;
+  margin: 20px 0;
+}
+
+.toolbar {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding: 10px 0;
+}
+
+.toolbar-button {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 8px 15px;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.toolbar-button:hover {
+  background: #e2e8f0;
+  transform: translateY(-1px);
+}
+
+.bold-icon {
+  font-weight: bold;
+}
+
+.italic-icon {
+  font-style: italic;
+}
+
+.underline-icon {
+  text-decoration: underline;
+}
+
+.form-description {
+  margin: 15px 0;
+}
+
+.light-text {
+  color: #64748b;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.form-field {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 25px;
+  transition: all 0.2s ease;
+}
+
+.form-field:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-color: #cbd5e1;
+}
+
+.form-page-background > label {
+  display: block;
+  margin-bottom: 0;
+  font-weight: 500;
+  color: #334155;
+  min-width: 140px;
+  text-align: left;
+  font-size: 15px;
+}
+
+.required {
+  color: red;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+}
+
+input {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  border-bottom: 2px solid #e2e8f0;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+  background: transparent;
+  color: #000;
+}
+
+input::placeholder {
+  color: #000;
+}
+
+input:focus {
+  border-bottom: 2px solid #3b82f6;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 14px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 25px;
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+}
+
+.submit-button:active {
+  background-color: #1d4ed8;
+  transform: translateY(0);
+}
+
+.form-field textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.radio-group {
+  display: flex;
+  gap: 100px;
+  margin: 0 auto;
+  flex: 1;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.radio-label input[type="radio"] {
+  width: auto;
+  margin: 0;
+}
+
+select {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+}
+
+select:focus {
+  border-color: #3b82f6;
+  outline: none;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .form-page-background {
+    position: absolute;
+    height: auto;
+    min-height: 100vh;
+    overflow-y: visible;
+  }
+
+  body {
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  .form-container {
+    width: 90%;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  .form-header {
+    padding: 15px;
+  }
+
+  .form-titleqr {
+    font-size: 24px;
+  }
+
+  .form-field {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  label {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .toolbar {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .form-container {
+    width: 95%;
+    margin: 10px auto;
+    padding: 10px;
+  }
+
+  .form-field {
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+
+  .form-titleqr {
+    font-size: 20px;
+  }
+
+  .toolbar-button {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .light-text {
+    font-size: 14px;
+  }
+
+  input {
+    font-size: 14px;
+    padding: 8px 0;
+    color: #000;
+  }
+
+  .submit-button {
+    padding: 12px;
+    font-size: 14px;
+  }
+}

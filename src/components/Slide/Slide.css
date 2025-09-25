@@ -1,0 +1,322 @@
+.slider-container {
+  position: relative;
+  height: 85vh;
+  width: 100vw;
+  margin: 0 auto;
+  overflow: hidden;
+  margin-top: 0px;
+}
+
+video {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.slider-image {
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.8s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.slider-dark-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  /* tối hơn */
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .slider-dark-overlay {
+    flex-direction: column;
+    text-align: center;
+    /* căn giữa text cho đẹp */
+    padding: 20px;
+  }
+}
+
+.slider-overlay {
+  position: absolute;
+
+  padding: 0 5%;
+  max-width: 600px;
+  color: white;
+  text-align: left;
+  z-index: 2;
+}
+
+.slider-subtitle {
+  font-size: 20px;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.slider-title {
+  font-size: 48px;
+  font-weight: bold;
+  line-height: 1.2;
+  margin-bottom: 30px;
+}
+
+.slider-buttons .btn {
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  margin-right: 15px;
+  font-size: 16px;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* Hover hiệu ứng trượt trái -> phải */
+.btn.primary {
+  background-color: #1cb9f3;
+  color: white;
+}
+
+.btn.primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: -1;
+  transition: left 0.4s ease;
+}
+
+.btn.primary:hover::before {
+  left: 0;
+}
+
+.btn.primary:hover {
+  color: #1cb9f3;
+}
+
+.btn.secondary {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.btn.secondary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: -1;
+  transition: left 0.4s ease;
+}
+
+.btn.secondary:hover::before {
+  left: 0;
+}
+
+.btn.secondary:hover {
+  color: #1cb9f3;
+}
+
+/* Scroll controls */
+.scroll-controls {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 3;
+}
+
+.scroll-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.4);
+  border: none;
+  font-size: 20px;
+  margin: 10px 0;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: white;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  padding: 0;
+  line-height: 1;
+}
+
+/* Scroll line - chia 3 khúc */
+.scroll-line {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.scroll-segment {
+  width: 4px;
+  height: 16px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 2px;
+  transition: background-color 0.3s, height 0.3s;
+}
+
+.scroll-segment.active {
+  background-color: #ffffff;
+  height: 20px;
+}
+
+/* Container cho thanh tìm kiếm */
+.slider-search-container {
+  position: absolute;
+  right: 50px;
+  /* Di chuyển sang bên phải */
+  top: 50%;
+  /* Căn giữa theo chiều dọc */
+  transform: translateY(-50%);
+  /* Căn giữa hoàn hảo */
+  width: 800px;
+  /* Tăng chiều rộng để phù hợp với layout ngang */
+  max-width: 800px;
+  z-index: 2;
+}
+
+@media (max-width: 480px) {
+  .btn-booking {
+    margin-left: 500px;
+    align-items: center;
+  }
+}
+
+/* Title cho thanh tìm kiếm */
+.search-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.search-title h3 {
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 1024px) {
+  .slider-container {
+    height: 40vh;
+  }
+
+  .slider-title {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .slider-container {
+    margin-top: 0px;
+
+    height: 40vh;
+  }
+
+  .slider-title {
+    font-size: 24px;
+  }
+
+  .slider-subtitle {
+    font-size: 16px;
+  }
+
+  .scroll-controls {
+    display: none;
+  }
+
+  .slider-image {
+    height: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .slider-container {
+    margin-top: 65px;
+  }
+
+  .slider-title {
+    font-size: 20px;
+  }
+
+  .slider-subtitle {
+    font-size: 14px;
+  }
+
+  .slider-buttons {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .slider-buttons .btn {
+    max-width: 135px;
+    margin-bottom: 5px;
+    font-size: 12px;
+  }
+
+  .slider-image {
+    height: 100%;
+  }
+}
+
+.slider-search-container {
+  text-align: center;
+  margin-top: 0px;
+}
+
+.btn-booking {
+  display: inline-block;
+  background: rgba(16, 42, 239, 0.8);
+  /* nền mờ nhẹ */
+  backdrop-filter: blur(6px);
+  /* tạo cảm giác trong suốt */
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-booking:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-3px) scale(1.05);
+  /* đổi màu chữ thành gradient */
+  background-image: linear-gradient(135deg, #f73c3c 0%, #646cff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* cho chữ hiện gradient */
+}

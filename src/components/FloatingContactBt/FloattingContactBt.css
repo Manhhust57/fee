@@ -1,0 +1,79 @@
+.floating-container {
+  position: fixed;
+  right: 10px;
+  bottom: 16px;
+  z-index: 1000;
+}
+
+.contact-options {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-item {
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
+  color: black;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  overflow: hidden;
+  width: fit-content;
+  max-width: 300px;
+}
+
+.contact-item:hover {
+  transform: scale(1.02);
+  cursor: pointer;
+  color: rgb(81, 79, 228);
+}
+
+/* 👇 Icon tự động rung lặp lại */
+.contact-item img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  animation: shake 1.5s infinite ease-in-out;
+}
+
+/* 👇 Keyframe cho hiệu ứng lắc */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-1.5px);
+  }
+  40% {
+    transform: translateX(1.5px);
+  }
+  60% {
+    transform: translateX(-1px);
+  }
+  80% {
+    transform: translateX(1px);
+  }
+}
+
+/* 👇 Chữ ẩn mặc định */
+.contact-item span {
+  opacity: 0;
+  max-width: 0;
+  margin-left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+/* 👇 Hover từng item thì hiện đúng span của item đó */
+.contact-item:hover span {
+  opacity: 1;
+  max-width: 200px;
+  margin-left: 10px;
+}
