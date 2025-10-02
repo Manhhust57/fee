@@ -195,13 +195,13 @@ const Home: React.FC = () => {
   return (
     <div className="main-home">
       <Slide />
-      <TopicBlog />
-      <Should />
+      {/* <TopicBlog />
+      <Should /> */}
       <Event />
       <Review />
       <div style={{ marginTop: '20px' }}></div>
       
-      <Mapcty />
+      
       <ScrollToTopButton showAt={1000} />
     </div>
   );

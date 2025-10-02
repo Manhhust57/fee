@@ -108,14 +108,45 @@ const Footer: React.FC = () => {
                   Zalo
                 </a>
               </div>
+              
               <div className="list-item">
-                <a href="#">
+                <a href="https://www.youtube.com/@AnstayResidencebyALaCarte">
                   <img
-                    src="https://i.ibb.co/zhkk3H5Y/1.jpg"
+                    src="pictures/youtube.png"
+                    alt="Youtube"
+                    className="icon-fl"
+                  />
+                  Youtube
+                </a>
+              </div>
+              <div className="list-item">
+                <a href="https://www.tiktok.com/@alacarte_by_anstay?is_from_webapp=1&sender_device=pc">
+                  <img
+                    src="pictures/tiktok.png"
                     alt="telegram"
                     className="icon-fl"
                   />
-                  Telegram
+                  Tiktok
+                </a>
+              </div>
+              <div className="list-item">
+                <a href="https://www.instagram.com/alacarte_by_anstay/">
+                  <img
+                    src="pictures/instagram.png"
+                    alt="telegram"
+                    className="icon-fl"
+                  />
+                  Instagram
+                </a>
+              </div>
+              <div className="list-item">
+                <a href="https://www.threads.com/@alacarte_by_anstay?xmt=AQF0HBzzNiPUzwbVRTrHtNKV9ZcFakZI9z8EGQY7UVb6wTQ">
+                  <img
+                    src="pictures/threads.png"
+                    alt="telegram"
+                    className="icon-fl"
+                  />
+                  Threads
                 </a>
               </div>
             </div>
@@ -123,45 +154,16 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="footer-right">
-          <div className="footer-right-title">
-            <h3>HÌNH THỨC THANH TOÁN</h3>
-          </div>
-          <div className="footer-right-img ftr-2">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Logo_TPBank.svg/2560px-Logo_TPBank.svg.png"
-              alt="tpbank"
-              className="footer-right-img1"
-            />
-            <img
-              src="https://i.ibb.co/8nrFMDmd/huong-dan-dang-ky-tai-khoan-paypal-1024x512-removebg-preview.png"
-              alt="paypal"
-              className="footer-right-img2"
-            />
-            <img
-              src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-MoMo-Square.png"
-              alt="momo"
-              className="footer-right-img3"
-            />
-            <img
-              src="https://i.ibb.co/xqwC41Nm/tether-usdt-logo-png-seeklogo-323175-removebg-preview.png"
-              alt="usdt"
-              className="footer-right-img4"
-            />
-          </div>
-
-          <p
-            className="payment-note"
-            style={{
-              fontWeight: "bold",
-              fontSize: "20px",
-              color: "#1f2937",
-              textAlign: "center",
-              marginTop: "0px",
-              marginBottom: "0px",
-            }}
-          >
-            Đang chờ xác nhận từ Bộ Công Thương
-          </p>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.9798910304207!2d107.00014641103532!3d20.953322680596486!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x314a5fbce3525b65%3A0xeb9eed19f0f52778!2sAnstay%20Residence%20by%20A%20La%20Carte%20H%E1%BA%A1%20Long!5e0!3m2!1svi!2s!4v1758160741455!5m2!1svi!2s"
+            width="700px"
+            height="300px"
+            style={{ border: 0 }}
+            allowFullScreen={true}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Cinema Location Map"
+          ></iframe>
         </div>
       </div>
 

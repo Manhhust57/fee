@@ -6,7 +6,6 @@ import Apartment from "./components/Apartment/Apartment";
 import ApartmentDetail from "./components/ApartmentDetail/ApartmentDetail";
 import Tour from "./components/Tour/Tour";
 import TourDetail from "./components/TourDetail/TourDetail";
-import Booking from "./components/Booking/Booking";
 import Help from "./components/Help/Help";
 import AboutUs from "./components/AboutUs/AboutUs";
 import AboutCP from "./components/AboutList/AboutCP/AboutCP";
@@ -16,7 +15,6 @@ import Coperate from "./components/Coperate/Coperate";
 import { AuthProvider } from "./Context/AuthContext";
 import ExploExper from "./components/ExploExper/ExploExper";
 import DashBroad from "./components/DashBroad/DashBroad";
-import Blog from "./components/bookroom/bookroom.tsx";
 import ScrollToTop from "./components/ScrollToTop/SrcollToTop";
 import Culture from "./components/AboutList/Aboutculture/Culture";
 import Support from "./components/Support/Support";
@@ -25,16 +23,17 @@ import FormQr from "./components/FormQr/FormQr.tsx";
 import SearchResults from "./pages/SearchResults/SearchResults";
 import ApartmentList from "./pages/ApartmentList/ApartmentList";
 import BookingPage from "./components/BookingPage/BookingPage.tsx";
-import BlogDetail from "./pages/Blog/BlogDetail";
 import ApartmentRoom from "./pages/ApartmentRoom/ApartmentRoom";
 import BaoMat from "./pages/ChinhSach/BaoMat/BaoMat.tsx";
 import ChamSoc from "./pages/ChinhSach/ChamSoc/ChamSoc.tsx";
 import HopTac from "./pages/ChinhSach/HopTac/HopTac.tsx";
-import BlogUser from "./pages/BlogUser/BlogUser.tsx";
 import ExploSub from "./components/ExploExperSub/ExploSub";
 import Policy from "./components/Policy/Policy.tsx";
 import Contact from "./components/Contact/Contact.tsx";
 import About from "./pages/About/about.tsx";
+import Booking from "./components/bookroom/bookroom.tsx";
+import Blogs from "./pages/displayBlog/blogs.tsx";
+import BlogDetail from "./pages/Blog/BlogDetail.tsx";
 function App() {
   return (
     <AuthProvider>
@@ -60,6 +59,16 @@ function App() {
               </MainLayout>
             }
           />
+           <Route
+            path="/blog"
+            element={
+              <MainLayout>
+                <Blogs />
+              </MainLayout>
+            }
+
+
+          /> 
           {/* <Route
             path="/tour-ha-noi/:tourName/view"
             element={
@@ -68,6 +77,16 @@ function App() {
               </MainLayout>
             }
           />*/}
+          <Route
+            path="/blog/id/:id"
+            element={
+              <MainLayout>
+                <BlogDetail />
+              </MainLayout>
+            }
+          />
+
+          
           <Route
             path="/contact"
             element={
@@ -118,14 +137,14 @@ function App() {
             }
           />
 
-          <Route
+          {/* <Route
             path="/booking-page"
             element={
               <MainLayout>
                 <Booking />
               </MainLayout>
             }
-          />
+          /> */}
           <Route
             path="/help"
             element={
@@ -186,7 +205,7 @@ function App() {
             path="/booking"
             element={
               <MainLayout>
-                <Blog />
+                <Booking />
               </MainLayout>
             }
           />
@@ -214,22 +233,22 @@ function App() {
               </MainLayout>
             }
           />
-          <Route
+          {/* <Route
             path="/blogUser"
             element={
               <MainLayout>
                 <BlogUser />
               </MainLayout>
             }
-          />
-          <Route
+          /> */}
+          {/* <Route
             path="/blog"
             element={
               <MainLayout>
                 <Blog />
               </MainLayout>
             }
-          />
+          /> */}
 
           <Route
             path="/support"
@@ -283,7 +302,7 @@ function App() {
               </MainLayout>
             }
           />
-          <Route path="/blog/:id" element={<BlogDetail />} />
+          {/* <Route path="/blog/:id" element={<BlogDetail />} /> */}
           <Route path="/chinh-sach-bao-mat" element={<BaoMat />} />
           <Route path="/cham-soc-khach-hang" element={<ChamSoc />} />
           <Route path="/chuong-trinh-hop-tac" element={<HopTac />} />

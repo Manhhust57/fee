@@ -12,23 +12,23 @@ const Review = () => {
     {
       src: "https://i.ibb.co/7drwxYbK/35250.jpg",
       name: "Căn hộ 1",
-      description: "Căn hộ sạch sẽ, tiện nghi",
+      description: "Ở khu residence của a la carte, vị trí ổn ở khu Hùng Thắng, có bãi tắm công cộng cảnh đẹp dù nước không sạch lắm. Phòng siêu rộng, sạch sẽ, thiết bị tiêu chuẩn cao. Chăn nệm ấm êm sạch sẽ. View đẹp có điều kính ngoài dơ. Wifi mạnh.",
       rating: 4.5,
-      reviewer: "Nguyễn Văn An",
+      reviewer: "Lim A",
     },
     {
       src: "https://i.ibb.co/Lz1xDYbJ/dich-vu-skylake9.jpg",
       name: "Căn hộ 2",
-      description: "Không gian thoáng mát, phù hợp gia đình",
+      description: "Trải nghiệm rất vui và thú vị. Phòng đẹp, mình đi hôm hơi lạnh nhưng phòng có điều hoà sưởi nên khá oki. Phòng đầy đủ tiện nghi như bếp, máy giặt sấy, nên rất phù hợp với gdinh nghỉ dưỡng nhiều ngày, view city khá xinh có ban công rộng, thoải mái",
       rating: 4.5,
-      reviewer: "Trần Thị Bích",
+      reviewer: "Huyền Ngô",
     },
     {
       src: "https://i.ibb.co/bMq309YJ/z3726691497870-9b7733f818db1076cd9e16e45f434848.jpg",
       name: "Căn hộ 3",
-      description: "Nội thất đẹp, vị trí thuận tiện",
+      description: "Đặt phòng nhanh gọn nhẹ. Chỗ ở tiện nghi, thoải mái. Mình đặt lại 3 lần rùi",
       rating: 5.0,
-      reviewer: "Lê Hoàng Minh",
+      reviewer: "Hạnh Chi",
     },
     {
       src: "https://i.ibb.co/DH128B0T/dich-vu-skylake5.jpg",
@@ -70,6 +70,7 @@ const Review = () => {
           centerMode={false}
           infinite={true}
           dots={true}
+          autoplay={false}  
           beforeChange={(from, to) => setCurrentIndex(to)}
         >
           {images.map((item, index) => (

@@ -291,15 +291,15 @@ const Header: React.FC = () => {
               >
                 Chính Sách
               </Link>
-              {/* <Link
-                to="/explore&experience"
+              <Link
+                to="/blog"
                 onClick={() => setNavActive(false)}
                 className={
-                  location.pathname === "/explore&experience" ? "active" : ""
+                  location.pathname === "/blog" ? "active" : ""
                 }
               >
-                Khám phá & Trải nghiệm
-              </Link> */}
+                Blog
+              </Link>
             </div>
           </div>
         </div>

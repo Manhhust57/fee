@@ -46,6 +46,7 @@ export default function BlogDetail() {
   return (
     <>
       <Header />
+      
       <div className="blog-detail-container">
         <h1 className="blog-detail-title">{blog.title}</h1>
         <div className="blog-detail-header">
