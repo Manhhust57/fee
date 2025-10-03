@@ -298,7 +298,7 @@ video {
 
 .btn-booking {
   display: inline-block;
-  background: rgba(16, 42, 239, 0.8);
+  background: #17337a;
   /* nền mờ nhẹ */
   backdrop-filter: blur(6px);
   /* tạo cảm giác trong suốt */

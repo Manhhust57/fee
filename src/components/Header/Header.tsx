@@ -282,11 +282,12 @@ const Header: React.FC = () => {
               >
                 Thông tin về chúng tôi
               </Link>
+              
               <Link
                 to="/policy"
                 onClick={() => setNavActive(false)}
                 className={
-                  location.pathname === "/explore&chinhsach" ? "active" : ""
+                  location.pathname === "/policy" ? "active" : ""
                 }
               >
                 Chính Sách

@@ -87,32 +87,32 @@ const Event = () => {
   const destinations = [
     {
       id: 1,
-      city: "Lễ Hội Truyền Thống",
-      image: "https://i.ibb.co/mrmyMtyc/anh1.jpg",
+      city: "Quầy Bar",
+      image: "pictures/anh2.jpg",
       alt: "Chỗ ở sang trọng ở London với nội thất hiện đại"
     },
     {
       id: 2,
       city: "Dù lượn",
-      image: "https://cdn.nhatrangbooking.com.vn/images/uploads/du-bay-nha-trang-top.jpg",
+      image: "pictures/anh5.png",
       alt: "Hồ bơi trên sân thượng Los Angeles với tầm nhìn thành phố"
     },
     {
       id: 3,
-      city: "Nghệ Sĩ Quốc Tế",
-      image: "https://tse2.mm.bing.net/th/id/OIP.8mcw3x3iDVs97C2GpTOS2QHaE7?rs=1&pid=ImgDetMain&o=7&rm=3",
+      city: "Pháo Hoa ",
+      image: "pictures/anh8.jpg",
       alt: "Khu vực hồ bơi khách sạn sang trọng Dubai"
     },
     {
       id: 4,
       city: "Nhạc Nước",
-      image: "https://toquoc.mediacdn.vn/280518851207290880/2022/8/27/photo-1661566576061-1661566576673624898652-0-200-1125-2000-crop-1661566787318670280118.jpg",
-      alt: "Sân thượng NYC với tầm nhìn đường chân trời"
+      image: "pictures/anh6.jpg",
+      alt: "Nhac nước với tầm nhìn đường chân trời"
     },
     {
       id: 5,
-      city: "EDM",
-      image: "https://ufo-network.com/wp-content/uploads/2023/02/Defqon.1-2023-Lineup-UFO-Network-Press-Image-2.jpg",
+      city: "Hang động",
+      image: "pictures/anh3.jpg",
       alt: "Mặt tiền khách sạn boutique Montreal"
     }
   ];

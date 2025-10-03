@@ -39,26 +39,26 @@ const Footer: React.FC = () => {
                     <span>Email: anstayresidence@gmail.com</span>
                   </li>
                 </ul>
-              </div>
-
-              {/* Second Column */}
-              <div className="footer-column">
                 <h3>LIÊN HỆ</h3>
                 <ul>
                   <li><Link to="/about-us">Về Chúng Tôi</Link></li>
                   <li><Link to="#">Sách Hướng Dẫn</Link></li>
                 </ul>
+              </div>
+
+              {/* Second Column */}
+              <div className="footer-column">
                 
+              </div>
+
+              {/* Third Column - Social Media */}
+              <div className="footer-column" style={{ width: 'px' }}>
                 <h3>CHÍNH SÁCH</h3>
                 <ul>
                   <li><Link to="/chinh-sach-bao-mat">Chính Sách Bảo Mật</Link></li>
                   <li><Link to="/chuong-trinh-hop-tac">Chương Trình Hợp Tác</Link></li>
                   <li><Link to="/cham-soc-khach-hang">Chăm Sóc Khách Hàng</Link></li>
                 </ul>
-              </div>
-
-              {/* Third Column - Social Media */}
-              <div className="footer-column">
                 <h3>THEO DÕI CHÚNG TÔI</h3>
                 <div className="social-icons">
                   <a href="https://www.facebook.com/AnstayVN" target="_blank" rel="noopener noreferrer">
@@ -77,14 +77,24 @@ const Footer: React.FC = () => {
                     />
                     Zalo
                   </a>
-                  <a href="#" target="_blank" rel="noopener noreferrer">
+                  
+                  <a href="https://www.youtube.com/@AnstayResidencebyALaCarte" target="_blank" rel="noopener noreferrer">
                     <img
-                      src="https://i.ibb.co/zhkk3H5Y/1.jpg"
-                      alt="telegram"
+                      src="/pictures/youtube.png"
+                      alt="youtube"
                       className="icon-fl"
                     />
-                    Telegram
+                    Youtube
                   </a>
+                  <a href="https://www.instagram.com/alacarte_by_anstay/" target="_blank" rel="noopener noreferrer">
+                    <img
+                      src="/pictures/instagram.png"
+                      alt="instagram"
+                      className="icon-fl"
+                    />
+                    Instagram
+                  </a>
+                  
                 </div>
               </div>
             </div>

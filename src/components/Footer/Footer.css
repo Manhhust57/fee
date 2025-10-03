@@ -45,8 +45,9 @@
 }
 
 .footer-left-columns {
+  margin-bottom: 150px;
   display: flex;
-  gap: 50px;
+  gap: 0px;
   flex: 1;
   align-items: flex-start;
 }
@@ -221,6 +222,7 @@
 }
 
 .footer-bottom {
+  height: 45px;
   width: 100%;
   background-color: #17337a;
   color: #f8f9fa;
@@ -378,6 +380,9 @@
   .footer-bottom-content {
     padding: 0 10px;
   }
+    .footer-bottom{
+    padding: 0px 0;
+    }
   
   .copyright,
   .footer-links {
