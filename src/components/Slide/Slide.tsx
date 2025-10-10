@@ -15,8 +15,17 @@ const Slide = () => {
           playsInline
           preload="auto"
           className="slider-video"
-          
         />
+
+        {/* <iframe
+          width="100%"
+          height="800px"
+          src="https://www.youtube.com/embed/porsoJ7nWaE?autoplay=1&controls=0&showinfo=1&modestbranding=1&rel=0&loop=1&mute=1"
+          title="Video giới thiệu"
+          loading="lazy"
+          allowFullScreen
+        ></iframe> */}
+
       </div>
       
       <div className="slider-dark-overlay">

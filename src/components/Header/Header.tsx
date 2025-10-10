@@ -1,183 +1,121 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useContext, useRef, useCallback } from "react";
 import "./Header.css";
-import { Link } from "react-router-dom";
-import { CircleHelp, Earth, BriefcaseBusiness, UserRound } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { CircleHelp, Earth, UserRound } from "lucide-react";
 import { DownOutlined } from "@ant-design/icons";
-import type { MenuProps } from "antd";
-import { useLocation } from "react-router-dom";
-import { Dropdown, Space, Spin } from "antd";
-import { HelpCircle } from "lucide-react";
 import LoginPopup from "../Login/LoginPopup";
 import { AuthContext } from "../../Context/AuthContext";
-type MenuItem = {
-  key: string;
-  label: string | React.ReactNode;
-  children?: MenuItem[];
-};
+
+interface User {
+  fullName: string;
+  [key: string]: any;
+}
+
+interface Apartment {
+  id: number;
+  name: string;
+}
 
 const Header: React.FC = () => {
-  const [showPopup, setShowPopup] = useState(false);
-  const [loggedInFullname, setLoggedInFullname] = useState<string | null>(null);
-  const [userMenuActive, setUserMenuActive] = useState(false); // State for user-menu dropdown
   const auth = useContext(AuthContext);
+  const location = useLocation();
+
+  // Refs
   const navRef = useRef<HTMLDivElement>(null);
   const hamburgerRef = useRef<HTMLDivElement>(null);
-  const userMenuRef = useRef<HTMLDivElement>(null); // Ref for user-menu dropdown
-  const [userName, setUserName] = useState<string>("");
-  const [loggedInUser, setLoggedInUser] = useState<any>(null);
-  const location = useLocation();
-  const [hnApartments, setHnApartments] = useState([]); // Dữ liệu căn hộ Hà Nội
-  const [hlApartments, setHlApartments] = useState([]);
-  const [loading, setLoading] = useState({ hn: false, hl: false });
-  const [openMenu1, setOpenMenu1] = useState<string | null>(null); // cấp 1
-  const [openMenu2, setOpenMenu2] = useState<string | null>(null); // cấp 2
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  // States
+  const [showPopup, setShowPopup] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
+  const [navActive, setNavActive] = useState(false);
+  const [userMenuActive, setUserMenuActive] = useState(false);
+
+  // Guard clause
   if (!auth) return null;
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user") || "null");
-    if (user) {
-      setLoggedInFullname(user.fullname);
-    }
-  }, []);
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      const userData = JSON.parse(storedUser);
-      setUserName(userData.fullName);
-    }
-  }, []);
-  useEffect(() => {
-    // Check for user data when component mounts and when auth.user changes
-    const checkUserLogin = () => {
+
+  // Lấy thông tin user từ localStorage
+  const getUserFromStorage = useCallback((): User | null => {
+    try {
       const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        const userData = JSON.parse(storedUser);
-        setLoggedInUser(userData);
-        setLoggedInFullname(userData.fullName);
-      } else {
-        setLoggedInUser(null);
-        setLoggedInFullname(null);
-      }
+      return storedUser ? JSON.parse(storedUser) : null;
+    } catch (error) {
+      console.error("Error parsing user data:", error);
+      return null;
+    }
+  }, []);
+
+  // Effect: Load user data
+  useEffect(() => {
+    const checkUserLogin = () => {
+      const userData = getUserFromStorage();
+      setLoggedInUser(userData);
     };
+
     checkUserLogin();
-    // Add event listener for storage changes
+
+    // Lắng nghe sự thay đổi localStorage
     window.addEventListener("storage", checkUserLogin);
-    return () => {
-      window.removeEventListener("storage", checkUserLogin);
+    return () => window.removeEventListener("storage", checkUserLogin);
+  }, [auth.user, getUserFromStorage]);
+
+  // Effect: Click outside handler
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+
+      if (
+        navRef.current?.contains(target) ||
+        hamburgerRef.current?.contains(target) ||
+        userMenuRef.current?.contains(target)
+      ) {
+        return;
+      }
+
+      setNavActive(false);
+      setUserMenuActive(false);
     };
-  }, [auth.user]);
-  const handleLogout = () => {
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Handlers
+  const handleLogout = useCallback(() => {
     auth.logout();
     setLoggedInUser(null);
-    setLoggedInFullname(null);
     setUserMenuActive(false);
-  };
-  const handleSignInClick = () => {
-    setShowPopup(true);
-  };
-  const handleLoginSuccess = (fullname: string) => {
-    setLoggedInFullname(fullname);
+  }, [auth]);
+
+  const handleLoginSuccess = useCallback((fullname: string) => {
+    const userData = getUserFromStorage();
+    setLoggedInUser(userData);
     setShowPopup(false);
-  };
-  const [navActive, setNavActive] = useState(false);
-  const toggleNav = () => {
-    setNavActive(!navActive);
-  };
-  const toggleUserMenu = () => {
-    setUserMenuActive(!userMenuActive); // Toggle dropdown on click
-  };
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      navRef.current &&
-      !navRef.current.contains(event.target as Node) &&
-      hamburgerRef.current &&
-      !hamburgerRef.current.contains(event.target as Node) &&
-      userMenuRef.current &&
-      !userMenuRef.current.contains(event.target as Node)
-    ) {
-      setNavActive(false);
-      setUserMenuActive(false); // Close user-menu dropdown when clicking outside
-    }
-  };
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-  const [isMobile, setIsMobile] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 480);
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => window.removeEventListener("resize", handleResize);
+  }, [getUserFromStorage]);
+
+  const toggleNav = useCallback(() => {
+    setNavActive(prev => !prev);
   }, []);
 
-  const fetchApartments = async (area: "HA_NOI" | "HA_LONG") => {
-    try {
-      setLoading((prev) => ({
-        ...prev,
-        [area === "HA_NOI" ? "hn" : "hl"]: true,
-      }));
-      const res = await fetch(
-        `https://anstay.com.vn/api/apartments/by-area?area=${area}`
-      );
-      if (!res.ok) throw new Error("Failed to fetch apartments");
-      const data = await res.json();
-
-      const mappedItems: MenuProps["items"] = data.map((apt: any) => ({
-        key: `${area.toLowerCase()}-apt-${apt.id}`,
-        label: (
-          <Link
-            to={`/apartment/${area.toLowerCase()}/${apt.name}`}
-            state={{ apartment: apt.name }}
-          >
-            {apt.name}
-          </Link>
-        ),
-      }));
-
-      if (area === "HA_NOI") setHnApartments(mappedItems);
-      else setHlApartments(mappedItems);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading((prev) => ({
-        ...prev,
-        [area === "HA_NOI" ? "hn" : "hl"]: false,
-      }));
-    }
-  };
-
-  useEffect(() => {
-    fetchApartments("HA_NOI");
-    fetchApartments("HA_LONG");
+  const toggleUserMenu = useCallback(() => {
+    setUserMenuActive(prev => !prev);
   }, []);
-  const items: MenuItem[] = [
-    {
-      key: "1",
-      label:  (
-        <Link to="/chinh-sach-bao-mat" state={{ location: "HA_NOI" }}>
-          Chính Sách Bảo Mật
-        </Link>
-      ), 
-      
-    },
-    {
-      key: "2",
-      label: <Link to="/chuong-trinh-hop-tac" state={{ location: "HA_NOI" }}>
-        Chương Trình Hợp Tác
-      </Link>
-      
-    },
-    {
-      key: "3",
-      label: <Link to="/cham-soc-khach-hang" state={{ location: "HA_NOI" }}>
-        Chăm Sóc Khách Hàng
-      </Link>
-      
-    },
+
+  const closeNav = useCallback(() => {
+    setNavActive(false);
+  }, []);
+
+  const openLoginPopup = useCallback(() => {
+    setShowPopup(true);
+    setNavActive(false);
+  }, []);
+
+  // Navigation links
+  const navLinks = [
+    { to: "/booking", label: "Đặt Phòng" },
+    { to: "/about", label: "Thông tin về chúng tôi" },
+    { to: "/policy", label: "Chính Sách" },
+    { to: "/blog", label: "Blog" },
   ];
 
   return (
@@ -186,50 +124,69 @@ const Header: React.FC = () => {
         {navActive && (
           <div
             className="header-nav-overlay active"
-            onClick={() => setNavActive(false)}
-          ></div>
+            onClick={closeNav}
+            aria-hidden="true"
+          />
         )}
+
         <div className="header-container">
+          {/* Logo */}
           <div className="header-logo-container">
             <Link to="/">
               <img
                 src="https://i.ibb.co/35SyTcnX/Anstay.png"
-                alt="logo"
+                alt="Anstay Logo"
                 className="header1-logo"
               />
             </Link>
           </div>
-          <div className="hamburger" onClick={toggleNav} ref={hamburgerRef}>
-            <div></div>
-            <div></div>
-            <div></div>
+
+          {/* Hamburger Menu */}
+          <div
+            className="hamburger"
+            onClick={toggleNav}
+            ref={hamburgerRef}
+            role="button"
+            aria-label="Toggle navigation"
+            aria-expanded={navActive}
+          >
+            <div />
+            <div />
+            <div />
           </div>
+
+          {/* Navigation */}
           <div
             className={`header-nav-container ${navActive ? "active" : ""}`}
             ref={navRef}
           >
+            {/* Header Select */}
             <div className="header-select">
               <div className="select-nav">
                 <CircleHelp size={18} className="header-icon" />
                 <Link to="/contact">Liên Hệ</Link>
               </div>
-              
-              
+
               <div className="select-nav">
                 <Earth size={18} className="header-icon" />
                 <Link to="">Ngôn Ngữ</Link>
               </div>
+
+              {/* User Menu */}
               <div
                 className={`user-menu ${userMenuActive ? "active" : ""}`}
                 ref={userMenuRef}
               >
-                {loggedInFullname ? (
+                {loggedInUser ? (
                   <div>
                     <div className="user-info" onClick={toggleUserMenu}>
                       <UserRound size={18} className="header-icon" />
-                      <span className="user-fullname">{loggedInFullname}</span>
+                      <span className="user-fullname">
+                        {loggedInUser.fullName}
+                      </span>
                       <DownOutlined />
                     </div>
+
                     {userMenuActive && (
                       <div className="dropdown">
                         <Link to="/dashbroad">
@@ -242,69 +199,41 @@ const Header: React.FC = () => {
                             Viết Blog
                           </button>
                         </Link>
-                        <Link to="#">
-                          <button
-                            onClick={handleLogout}
-                            className="btn-login logout-btn"
-                          >
-                            Đăng xuất
-                          </button>
-                        </Link>
+                        <button
+                          onClick={handleLogout}
+                          className="btn-login logout-btn"
+                        >
+                          Đăng xuất
+                        </button>
                       </div>
                     )}
                   </div>
                 ) : (
-                  <button
-                    className="btn-login"
-                    onClick={() => {
-                      handleSignInClick(), setNavActive(false);
-                    }}
-                  >
+                  <button className="btn-login" onClick={openLoginPopup}>
                     Đăng nhập
                   </button>
                 )}
               </div>
             </div>
+
+            {/* Navigation Links */}
             <div className="header-nav">
-              
-              {/* Links có hiệu ứng active */}
-              <Link
-                to="/booking"
-                onClick={() => setNavActive(false)}
-                className={location.pathname === "/booking" ? "active" : ""}
-              >
-                Đặt Phòng
-              </Link>
-              <Link
-                to="/about"
-                onClick={() => setNavActive(false)}
-                className={location.pathname === "/about" ? "active" : ""}
-              >
-                Thông tin về chúng tôi
-              </Link>
-              
-              <Link
-                to="/policy"
-                onClick={() => setNavActive(false)}
-                className={
-                  location.pathname === "/policy" ? "active" : ""
-                }
-              >
-                Chính Sách
-              </Link>
-              <Link
-                to="/blog"
-                onClick={() => setNavActive(false)}
-                className={
-                  location.pathname === "/blog" ? "active" : ""
-                }
-              >
-                Blog
-              </Link>
+              {navLinks.map(({ to, label }) => (
+                <Link
+                  key={to}
+                  to={to}
+                  onClick={closeNav}
+                  className={location.pathname === to ? "active" : ""}
+                >
+                  {label}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
       </header>
+
+      {/* Login Popup */}
       {showPopup && (
         <LoginPopup
           onClose={() => setShowPopup(false)}
@@ -314,4 +243,5 @@ const Header: React.FC = () => {
     </>
   );
 };
+
 export default Header;

@@ -31,13 +31,16 @@ const Policy: React.FC<PolicyProps> = ({ className }) => {
                                 <i className="bi bi-check-circle-fill text-success"></i>
                                 <strong>Miễn phí hủy</strong> tối đa trước 5 ngày so với ngày đến.
                             </li>
-                            <li>
-                                <i className="bi bi-exclamation-triangle-fill text-warning"></i>
-                                <strong>Hủy trong vòng 5 ngày</strong> trước khi đến hoặc không đến:
-                                <span className="highlight">tính phí toàn bộ thời gian lưu trú.</span>
-                            </li>
+                            
                         </ul>
                     </div>
+                    <div className="policy-note">
+                                    <p>
+                                        <i className="bi bi-exclamation-triangle-fill text-warning"></i>
+                                        <strong>Hủy trong vòng 5 ngày</strong> trước khi đến hoặc không đến:
+                                        <span className="highlight">tính phí toàn bộ thời gian lưu trú.</span>
+                                    </p>
+                                </div>
                 </section>
 
                 {/* Điều khoản điều kiện */}
@@ -121,7 +124,7 @@ const Policy: React.FC<PolicyProps> = ({ className }) => {
                                 <li>
                                     <i className="bi bi-plus-circle"></i>
                                     <span className="bed-type">Giường phụ theo yêu cầu:</span>
-                                    <span className="price">1,335,000 VND/trẻ em/đêm</span>
+                                    <span className="price">Có</span>
                                 </li>
                                 <li>
                                     <i className="bi bi-check-circle-fill text-success"></i>
@@ -139,7 +142,7 @@ const Policy: React.FC<PolicyProps> = ({ className }) => {
                                 <li>
                                     <i className="bi bi-plus-circle"></i>
                                     <span className="bed-type">Giường phụ theo yêu cầu:</span>
-                                    <span className="price">1,335,000 VND/người/đêm</span>
+                                    <span className="price">Có</span>
                                 </li>
                             </ul>
                         </div>
@@ -224,6 +227,36 @@ const Policy: React.FC<PolicyProps> = ({ className }) => {
                                     <i className="bi bi-credit-card-2-front"></i>
                                 </div>
                                 <span className="card-name">Thẻ ghi nợ</span>
+                            </div>
+                            <div className="payment-card">
+                                <div className="card-logo1">
+                                    <img src="/pictures/cash.png" alt="Tiền mặt" style={{ width: '', padding: '0px' }} />
+                                 </div>
+                                <span className="card-name">Tiền mặt</span>
+                            </div>
+                            <div className="payment-card">
+                                <div className="card-logo1">
+                                    <img src="/pictures/usdt.png" alt="Cryoty"  />
+                                </div>
+                                <span className="card-name">Cryoty </span>
+                            </div>
+                            <div className="payment-card">
+                                <div className="card-logo1">
+                                    <img src="/pictures/paypal.webp" alt="Paypal" />
+                                </div>
+                                <span className="card-name">Paypal</span>
+                            </div>
+                            <div className="payment-card">
+                                <div className="card-logo1">
+                                    <img src="/pictures/momo.png" alt="Momo" />
+                                </div>
+                                <span className="card-name">Momo</span>
+                            </div>
+                            <div className="payment-card">
+                                <div className="card-logo1">
+                                    <img src="/pictures/vnpay.jpg" alt="Vnpay" />
+                                </div>
+                                <span className="card-name">Vnpay</span>
                             </div>
                         </div>
                         

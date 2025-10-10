@@ -150,6 +150,7 @@ const Event = () => {
               src={destinations[3].image}
               alt={destinations[3].alt}
               className="destination-image"
+              loading="lazy"
             />
             <div className="image-overlay"></div>
           </div>

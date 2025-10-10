@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
           <div className="footer-brand">
             <div className="brand-logo">
               <img 
-                src="https://i.ibb.co/35SyTcnX/Anstay.png" 
+                src="/pictures/LogoAnstay-removebg-preview.png" 
                 alt="ANSTAY Logo" 
                 className="logo-image"
               />
@@ -61,7 +61,7 @@ const Footer: React.FC = () => {
                 </ul>
                 <h3>THEO DÕI CHÚNG TÔI</h3>
                 <div className="social-icons">
-                  <a href="https://www.facebook.com/AnstayVN" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.facebook.com/Anstayalacarte" target="_blank" rel="noopener noreferrer">
                     <img
                       src="https://i.ibb.co/dst8XydC/Facebook-Logo-2019.png"
                       alt="facebook"

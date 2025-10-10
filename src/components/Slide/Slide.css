@@ -43,8 +43,9 @@ video {
     flex-direction: column;
     text-align: center;
     /* căn giữa text cho đẹp */
-    padding: 20px;
-    top: 10%;
+    padding-left: 10px;
+    padding-top: 40px;
+    
   }
 }
 
@@ -264,7 +265,7 @@ video {
 
 @media (max-width: 480px) {
   .slider-container {
-    margin-top: 50px;
+    margin-top: 0;
   }
 
   .slider-title {

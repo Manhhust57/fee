@@ -45,7 +45,7 @@ const About: React.FC<AboutProps> = ({ className }) => {
                     </div>
                 </header>
 
-                {/* Hero Image */}
+                {/* Hero Image
                 <div className="hero-section">
                     <div className="hero-image">
                         <img src="https://cdn.tripspoint.com/uploads/photos/426/halong-bay-tour_mpTU2.jpeg" alt="À La Carte Ha Long Bay"  />
@@ -56,7 +56,7 @@ const About: React.FC<AboutProps> = ({ className }) => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 {/* Introduction Section */}
                 <section className="intro-section">
