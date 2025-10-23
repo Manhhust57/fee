@@ -180,8 +180,61 @@ export default function BlogDetail() {
               </section>
             )}
           </div>
-        </div>
+          <div style={{
+            fontFamily: "'Segoe UI', sans-serif",
+            background: "linear-gradient(135deg, #fffefb, #fff)",
+            border: "2px solid #0088feff",
+            borderRadius: "16px",
+            padding: "25px",
+            boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
+            textAlign: "center",
+            maxWidth: "650px",
+            margin: "40px auto"
+          }}>
+          {/* Không có code nào ở đây gây ra lỗi "Type 'string' has no properties in common with type 'Properties<string | number, string & {}>'" */}
+            
 
+            <h3 style={{ color: "#333", fontSize: "22px", marginBottom: "10px" }}> Bạn cảm thấy thế nào sau khi đọc bài viết này?</h3>
+
+            <p style={{
+              color: "#555",
+              fontSize: "16px",
+              lineHeight: 1.7,
+              marginBottom: "20px"
+            }}>
+              Chúng tôi rất muốn nghe cảm nhận của bạn!
+              Hãy gửi vài dòng chia sẻ về <strong>anstayresidence@gmail.com</strong>
+              và nhận ngay <span style={{ color: "#0088feff", fontWeight: 600 }}>phiếu ưu đãi 100.000&nbsp;VNĐ</span>
+              cho kỳ nghỉ tiếp theo tại <strong>Anstay</strong> nhé!
+            </p>
+
+            <a
+              href="https://anstay.com.vn/booking"
+              style={{
+                display: "inline-block",
+                color: "#000",
+                fontWeight: "bold",
+                textDecoration: "none",
+                padding: "0px",
+                borderRadius: "30px",
+                border: "2px solid #0088feff",
+                boxShadow: "0 1px 1px #0088feff",
+                transition: "all 0.3s ease"
+              }}
+            >
+              👉 Nhấn vào đây để nhận quà từ Anstay
+              <img src="/pictures/voucher.png"
+                alt="Phiếu ưu đãi 100.000 VNĐ từ Anstay"
+                style={{
+                  width: "100%",
+                  maxWidth: "320px",
+                  height: "160px",
+                }} loading="lazy" />
+            </a>
+          </div>
+
+        </div>
+            
         {/* Phần 4: Bài viết liên quan */}
         <div className="related-blogs-section">
           <h3 className="related-blogs-title">Bài viết liên quan</h3>
@@ -214,9 +267,10 @@ export default function BlogDetail() {
         </div>
 
         {/* Phần 5: Để trống */}
-        <div className="blog-section-empty"></div>
+        <div className="blog-section-empty">dd</div>
       
       </div>
+      <div></div>
 
     
       <footer className="blog-footer">

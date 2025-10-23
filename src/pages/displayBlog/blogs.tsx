@@ -293,6 +293,7 @@ const blogs = () => {
                                 const target = e.target as HTMLImageElement;
                                 target.src = "https://placehold.co/400x250?text=No+Image";
                             }}
+                            loading="lazy"
                         />
                         <div className="blog-content">
                             <h2 className="blog-title">{blog.title}</h2>
@@ -399,6 +400,7 @@ const blogs = () => {
                                 src="https://i.ibb.co/dst8XydC/Facebook-Logo-2019.png"
                                 alt="facebook"
                                 className="icon-fl"
+                                
                             />
                         </a>
                         <a href="https://zalo.me/0916612772" target="_blank" rel="noopener noreferrer" aria-label="Zalo">
