@@ -11,7 +11,7 @@ export default function HopTac() {
         <h1>Chương Trình Hợp Tác</h1>
 
         <section>
-          <h2>1. Trở thành đối tác của Anstay</h2>
+          <h2>Trở thành đối tác của Anstay</h2>
           <p>
             Anstay chào đón tất cả cá nhân và tổ chức mong muốn hợp tác cùng
             chúng tôi trong lĩnh vực lưu trú, dịch vụ và du lịch. Dù bạn là chủ
@@ -25,8 +25,8 @@ export default function HopTac() {
         </section>
 
         <section>
-          <h2>2. Quyền lợi dành cho đối tác</h2>
-          <ul>
+          <h2>Quyền lợi dành cho đối tác</h2>
+          <ol>
             <li>Miễn phí đăng ký và đăng phòng lên nền tảng Anstay.</li>
             <li>
               Thiết kế hình ảnh, video quảng bá chuyên nghiệp cho đối tác.
@@ -40,21 +40,21 @@ export default function HopTac() {
               gian thực.
             </li>
             <li>Chính sách ưu đãi cho đối tác có hiệu suất cao.</li>
-          </ul>
+          </ol>
         </section>
 
         <section>
-          <h2>3. Đối tượng hợp tác</h2>
-          <ul>
+          <h2>Đối tượng hợp tác</h2>
+          <ol>
             <li>Chủ căn hộ dịch vụ, villa, homestay muốn cho thuê ngắn hạn.</li>
             <li>Cộng tác viên môi giới bất động sản du lịch.</li>
             <li>Đơn vị dịch vụ: dọn dẹp, lễ tân, bảo trì phòng.</li>
             <li>Doanh nghiệp lữ hành muốn mở rộng mạng lưới phòng lưu trú.</li>
-          </ul>
+          </ol>
         </section>
 
         <section>
-          <h2>4. Quy trình hợp tác</h2>
+          <h2>Quy trình hợp tác</h2>
           <ol>
             <li>
               Đăng ký thông tin đối tác tại website hoặc liên hệ trực tiếp với
@@ -68,31 +68,6 @@ export default function HopTac() {
             <li>Đưa tài sản lên nền tảng và triển khai truyền thông.</li>
             <li>Theo dõi kết quả qua dashboard quản trị đối tác.</li>
           </ol>
-        </section>
-
-        <section>
-          <h2>5. Liên hệ hợp tác</h2>
-          <ul>
-            <li>
-              Hotline hợp tác: <strong>(+84) 384945614</strong>
-            </li>
-            <li>
-              Zalo CSHT: <strong>(+84) 384945614</strong>
-            </li>
-            <li>
-              Email: <strong>anstayresidence1@gmail.com</strong>
-            </li>
-            <li>
-              Liên hệ Page chúng tôi:{" "}
-              <a
-                href="https://www.facebook.com/Anstayalacarte/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <strong>À La Carte Halong Bay Managed by Anstay </strong>
-              </a>
-            </li>
-          </ul>
         </section>
       </div>
       <Footer />

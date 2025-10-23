@@ -6,6 +6,9 @@
   overflow: hidden;
   margin-top: 60px;
 }
+.slider-title{
+  color: #ffffff;
+}
 
 video {
   object-fit: cover;
@@ -13,8 +16,8 @@ video {
   height: 100%;
 }
 
-.slider-image {
-  width: 100%;
+.slider-image {height: 100%;
+  width: 100vw;
   background-size: cover;
   background-position: center;
   transition: background-image 0.8s ease-in-out;

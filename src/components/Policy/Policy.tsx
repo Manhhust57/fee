@@ -11,7 +11,7 @@ const Policy: React.FC<PolicyProps> = ({ className }) => {
         <div className={`policy-container ${className || ''}`}>
             <div className="policy-content">
                 <header className="policy-header">
-                    <h1>Chính Sách Khách Sạn</h1>
+                    <h1>Chính Sách Lưu Trú</h1>
                     <p className="policy-subtitle">À La Carte Ha Long Bay Residence</p>
                 </header>
 
@@ -236,9 +236,9 @@ const Policy: React.FC<PolicyProps> = ({ className }) => {
                             </div>
                             <div className="payment-card">
                                 <div className="card-logo1">
-                                    <img src="/pictures/usdt.png" alt="Cryoty"  />
+                                    <img src="/pictures/usdt.png" alt="Crypto"  />
                                 </div>
-                                <span className="card-name">Cryoty </span>
+                                <span className="card-name">Crypto </span>
                             </div>
                             <div className="payment-card">
                                 <div className="card-logo1">

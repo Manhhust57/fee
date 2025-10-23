@@ -13,35 +13,44 @@ import "./BlogUser.css";
 // Cấu hình domain backend
 const API_IMAGE_PREFIX = "https://anstay.com.vn";
 
+// Interface cho image attributes
+interface ImageAttributes {
+  src: string;
+  alt?: string;
+  title?: string;
+  width?: number;
+  height?: number;
+}
+
 // Hàm upload ảnh luôn trả về url có domain
-const uploadImage = async (file) => {
+const uploadImage = async (file: File): Promise<string> => {
   const formData = new FormData();
   formData.append("file", file);
-  
+
   try {
     console.log("Đang upload ảnh đến:", `${API_IMAGE_PREFIX}/api/images/upload`);
-    
+
     const response = await axios.post(
       `${API_IMAGE_PREFIX}/api/images/upload`,
       formData,
-      { 
-        headers: { 
-          "Content-Type": "multipart/form-data" 
+      {
+        headers: {
+          "Content-Type": "multipart/form-data"
         },
-        timeout: 30000 // 30 giây timeout
+        timeout: 30000
       }
     );
-    
+
     console.log("Response upload:", response.data);
-    
+
     let url = response.data.url;
     if (url && url.startsWith("/")) {
       url = API_IMAGE_PREFIX + url;
     }
-    
+
     console.log("URL cuối cùng:", url);
     return url;
-  } catch (err) {
+  } catch (err: any) {
     console.error("Upload failed:", err);
     if (err.response) {
       console.error("Response error:", err.response.data);
@@ -75,23 +84,23 @@ const fontSizes = [
 ];
 
 // Hàm lấy text thuần từ HTML
-function stripHtml(html) {
+function stripHtml(html: string): string {
   const tmp = document.createElement("DIV");
   tmp.innerHTML = html;
   return tmp.textContent || tmp.innerText || "";
 }
 
 // Hàm fix url /uploads/... thành url đầy đủ domain
-const fixUrl = (url) =>
+const fixUrl = (url: string): string =>
   url && url.startsWith("/") ? API_IMAGE_PREFIX + url : url;
 
 // Hàm fix url ảnh trong nội dung (<img src="/uploads/...">)
-const fixContentImageUrls = (html) =>
+const fixContentImageUrls = (html: string): string =>
   html.replace(/<img\s+[^>]*src="(\/uploads\/[^"]+)"/g, (match, p1) =>
     match.replace(p1, API_IMAGE_PREFIX + p1)
   );
 
-const BlogUser = () => {
+const BlogUser: React.FC = () => {
   const [title, setTitle] = useState("");
   const [saving, setSaving] = useState(false);
   const [fontSizeInput, setFontSizeInput] = useState("16px");
@@ -99,7 +108,14 @@ const BlogUser = () => {
   const [imgHeight, setImgHeight] = useState("");
   const [thumbnail, setThumbnail] = useState("");
   const [status] = useState("DRAFT");
-  const [summary, setSummary] = useState(""); // <-- Thêm state cho tóm tắt
+  const [summary, setSummary] = useState("");
+
+  // Loading states
+  const [uploadingThumbnail, setUploadingThumbnail] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+
+  // Preview state
+  const [showPreview, setShowPreview] = useState(false);
 
   const editor = useEditor({
     extensions: [
@@ -112,8 +128,8 @@ const BlogUser = () => {
             ...this.parent?.(),
             fontSize: {
               default: "16px",
-              parseHTML: (element) => element.style.fontSize || "16px",
-              renderHTML: (attributes) => {
+              parseHTML: (element: HTMLElement) => element.style.fontSize || "16px",
+              renderHTML: (attributes: { fontSize?: string }) => {
                 if (!attributes.fontSize) return {};
                 return { style: `font-size: ${attributes.fontSize}` };
               },
@@ -137,9 +153,9 @@ const BlogUser = () => {
     },
     onSelectionUpdate: ({ editor }) => {
       if (editor.isActive("image")) {
-        const attrs = editor.getAttributes("image");
-        setImgWidth(attrs.width || "");
-        setImgHeight(attrs.height || "");
+        const attrs = editor.getAttributes("image") as ImageAttributes;
+        setImgWidth(attrs.width?.toString() || "");
+        setImgHeight(attrs.height?.toString() || "");
       } else {
         setImgWidth("");
         setImgHeight("");
@@ -148,16 +164,16 @@ const BlogUser = () => {
   });
 
   // Upload thumbnail ảnh đại diện
-  const handleThumbnailChange = async (e) => {
-    const file = e.target.files[0];
+  const handleThumbnailChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
-    
-    // Kiểm tra kích thước file (giới hạn 5MB)
+
     if (file.size > 5 * 1024 * 1024) {
       alert("File quá lớn! Vui lòng chọn file nhỏ hơn 5MB.");
       return;
     }
-    
+
+    setUploadingThumbnail(true);
     try {
       const url = await uploadImage(file);
       if (url) {
@@ -167,20 +183,24 @@ const BlogUser = () => {
     } catch (error) {
       console.error("Lỗi upload thumbnail:", error);
       alert("Upload ảnh thất bại! Vui lòng thử lại.");
+    } finally {
+      setUploadingThumbnail(false);
     }
   };
 
   // Upload ảnh chèn vào nội dung bài
-  const handleImageChange = async (e) => {
-    const file = e.target.files[0];
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
-    
-    // Kiểm tra kích thước file (giới hạn 5MB)
+
     if (file.size > 5 * 1024 * 1024) {
       alert("File quá lớn! Vui lòng chọn file nhỏ hơn 5MB.");
       return;
     }
-    
+
+    if (!editor) return;
+
+    setUploadingImage(true);
     try {
       const imageUrl = await uploadImage(file);
       if (imageUrl) {
@@ -190,10 +210,13 @@ const BlogUser = () => {
     } catch (error) {
       console.error("Lỗi upload ảnh nội dung:", error);
       alert("Upload ảnh thất bại! Vui lòng thử lại.");
+    } finally {
+      setUploadingImage(false);
     }
   };
 
   const handleInsertLink = () => {
+    if (!editor) return;
     const url = prompt("Dán link hoặc nhập URL:");
     if (url) {
       editor
@@ -206,15 +229,17 @@ const BlogUser = () => {
   };
 
   const handleRemoveLink = () => {
+    if (!editor) return;
     editor.chain().focus().unsetLink().run();
   };
 
-  const handleFontChange = (e) => {
+  const handleFontChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (!editor) return;
     const font = e.target.value;
     editor.chain().focus().setFontFamily(font).run();
   };
 
-  const handleFontSizeDropdown = (e) => {
+  const handleFontSizeDropdown = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const val = e.target.value;
     setFontSizeInput(val);
     if (!editor) return;
@@ -241,34 +266,34 @@ const BlogUser = () => {
     }
   };
 
-  const handleImageWidthChange = (e) => {
+  const handleImageWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const width = e.target.value;
     setImgWidth(width);
     if (editor && editor.isActive("image")) {
-      const attrs = editor.getAttributes("image");
-      editor
-        .chain()
-        .focus()
-        .setImage({ ...attrs, width: width ? Number(width) : undefined } as any)
-        .run();
+      const attrs = editor.getAttributes("image") as ImageAttributes;
+      const newAttrs: ImageAttributes = {
+        ...attrs,
+        width: width ? Number(width) : undefined,
+      };
+      editor.chain().focus().setImage(newAttrs).run();
     }
   };
 
-  const handleImageHeightChange = (e) => {
+  const handleImageHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const height = e.target.value;
     setImgHeight(height);
     if (editor && editor.isActive("image")) {
-      const attrs = editor.getAttributes("image");
-      editor
-        .chain()
-        .focus()
-        .setImage({ ...attrs, height: height ? Number(height) : undefined } as any)
-        .run();
+      const attrs = editor.getAttributes("image") as ImageAttributes;
+      const newAttrs: ImageAttributes = {
+        ...attrs,
+        height: height ? Number(height) : undefined,
+      };
+      editor.chain().focus().setImage(newAttrs).run();
     }
   };
 
   // Hàm tạo slug tự động từ tiêu đề
-  const createSlug = (title) =>
+  const createSlug = (title: string): string =>
     title
       .toLowerCase()
       .normalize("NFD")
@@ -279,26 +304,27 @@ const BlogUser = () => {
 
   // Gửi bài blog lên BE
   const handleSave = async () => {
+    if (!editor) return;
+
     if (!title.trim()) {
       alert("Vui lòng nhập tiêu đề bài viết!");
       return;
     }
-    
-    if (!editor.getHTML().trim()) {
+
+    if (!editor.getHTML().trim() || editor.isEmpty) {
       alert("Vui lòng nhập nội dung bài viết!");
       return;
     }
-    
+
     setSaving(true);
 
     const slug = createSlug(title);
     const fixedThumbnail = fixUrl(thumbnail);
     const fixedContent = fixContentImageUrls(editor.getHTML());
 
-    // Nếu user không nhập summary thì tự sinh
     let summaryAuto = summary?.trim();
     if (!summaryAuto) {
-      summaryAuto = stripHtml(fixedContent).slice(0, 180); // lấy 180 ký tự đầu
+      summaryAuto = stripHtml(fixedContent).slice(0, 180);
     }
 
     const payload = {
@@ -330,7 +356,8 @@ const BlogUser = () => {
       setThumbnail("");
       setSummary("");
       editor.commands.clearContent();
-    } catch (e) {
+      setShowPreview(false);
+    } catch (e: any) {
       console.error("Lỗi khi lưu bài viết:", e);
       if (e.response) {
         console.error("Response error:", e.response.data);
@@ -342,9 +369,65 @@ const BlogUser = () => {
     setSaving(false);
   };
 
+  const handlePreview = () => {
+    if (!title.trim()) {
+      alert("Vui lòng nhập tiêu đề bài viết!");
+      return;
+    }
+    if (!editor || editor.isEmpty) {
+      alert("Vui lòng nhập nội dung bài viết!");
+      return;
+    }
+    setShowPreview(true);
+  };
+
+  if (!editor) {
+    return <div className="blog-admin">Đang tải editor...</div>;
+  }
+
+  // Preview Modal
+  if (showPreview) {
+    return (
+      <div className="blog-admin">
+        <div className="preview-header">
+          <h2> Xem trước bài viết</h2>
+          <div>
+            <button
+              className="back-btn"
+              onClick={() => setShowPreview(false)}
+            >
+              ← Quay lại chỉnh sửa
+            </button>
+            <button
+              className="save-btn"
+              disabled={saving}
+              onClick={handleSave}
+            >
+              {saving ? "Đang đăng..." : "✓ Đăng bài viết"}
+            </button>
+          </div>
+        </div>
+
+        <div className="preview-container">
+          {thumbnail && (
+            <div className="preview-thumbnail">
+              <img src={fixUrl(thumbnail)} alt="thumbnail" />
+            </div>
+          )}
+          <h1 className="preview-title">{title}</h1>
+          {summary && <p className="preview-summary">{summary}</p>}
+          <div
+            className="preview-content"
+            dangerouslySetInnerHTML={{ __html: fixContentImageUrls(editor.getHTML()) }}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="blog-admin">
-      <h2>Viết bài Blog mới</h2>
+      <h2> Viết bài Blog mới</h2>
 
       {/* THUMBNAIL UPLOAD */}
       <div className="thumbnail-row">
@@ -357,13 +440,15 @@ const BlogUser = () => {
             className="thumbnail-input"
             style={{ display: "none" }}
             id="thumbnail-upload"
+            disabled={uploadingThumbnail}
           />
           <button
             type="button"
             className="thumbnail-btn"
-            onClick={() => document.getElementById("thumbnail-upload").click()}
+            onClick={() => document.getElementById("thumbnail-upload")?.click()}
+            disabled={uploadingThumbnail}
           >
-            {thumbnail ? "Đổi ảnh" : "Chọn ảnh"}
+            {uploadingThumbnail ? "⏳ Đang tải..." : thumbnail ? "Đổi ảnh" : "Chọn ảnh"}
           </button>
         </div>
         {thumbnail ? (
@@ -371,7 +456,9 @@ const BlogUser = () => {
             <img src={fixUrl(thumbnail)} alt="thumbnail" />
           </div>
         ) : (
-          <div className="thumbnail-preview thumbnail-empty">Chưa có ảnh</div>
+          <div className="thumbnail-preview thumbnail-empty">
+            {uploadingThumbnail ? "⏳ Đang upload..." : "Chưa có ảnh"}
+          </div>
         )}
       </div>
 
@@ -480,12 +567,14 @@ const BlogUser = () => {
           <button
             onClick={() => editor.chain().focus().toggleBold().run()}
             title="Bold"
+            className={editor.isActive("bold") ? "is-active" : ""}
           >
             <b>B</b>
           </button>
           <button
             onClick={() => editor.chain().focus().toggleItalic().run()}
             title="Italic"
+            className={editor.isActive("italic") ? "is-active" : ""}
           >
             <i>I</i>
           </button>
@@ -495,18 +584,22 @@ const BlogUser = () => {
           <button onClick={handleRemoveLink} title="Xoá Link">
             ❌
           </button>
-          <label title="Chèn ảnh" className="toolbar-image-btn">
+          <label
+            title={uploadingImage ? "Đang upload..." : "Chèn ảnh"}
+            className={`toolbar-image-btn ${uploadingImage ? 'uploading' : ''}`}
+          >
             <span role="img" aria-label="Ảnh">
-              🖼️
+              {uploadingImage ? "⏳" : "🖼️"}
             </span>
             <input
               type="file"
               accept="image/*"
               onChange={handleImageChange}
               style={{ display: "none" }}
+              disabled={uploadingImage}
             />
           </label>
-          {editor && editor.isActive("image") && (
+          {editor.isActive("image") && (
             <>
               <input
                 className="image-size-input"
@@ -545,9 +638,22 @@ const BlogUser = () => {
           <EditorContent editor={editor} />
         </div>
       </div>
-      <button className="save-btn" disabled={saving} onClick={handleSave}>
-        {saving ? "Đang lưu..." : "Lưu bài viết"}
-      </button>
+      <div className="action-buttons">
+        <button
+          className="preview-btn"
+          onClick={handlePreview}
+          disabled={!title.trim() || editor.isEmpty}
+        >
+          👁️ Xem trước
+        </button>
+        <button
+          className="save-btn"
+          disabled={saving}
+          onClick={handleSave}
+        >
+          {saving ? "⏳ Đang lưu..." : "✓ Đăng bài viết"}
+        </button>
+      </div>
     </div>
   );
 };

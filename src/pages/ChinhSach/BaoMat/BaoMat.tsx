@@ -7,16 +7,16 @@ export default function BaoMat() {
   return (
     <>
       <Header />
-      <div className="privacy-policy-container">
-        <h1>Chính Sách Bảo Mật</h1>
+      <div className="container">
+        <h1>Chính Sách Bảo Mật Thông Tin</h1>
 
         <section>
-          <h2>1. Mục đích thu thập thông tin</h2>
+          <h2>Mục đích thu thập thông tin</h2>
           <p>
             Anstay thu thập thông tin cá nhân của khách hàng nhằm phục vụ các
             mục đích:
           </p>
-          <ul>
+          <ol>
             <li>
               Hỗ trợ khách hàng trong quá trình đặt phòng, thanh toán, xác nhận
               đơn hàng.
@@ -33,32 +33,32 @@ export default function BaoMat() {
               Gửi thông báo khuyến mãi, chương trình ưu đãi, thông tin mới (nếu
               được khách hàng đồng ý).
             </li>
-          </ul>
+          </ol>
         </section>
 
         <section>
-          <h2>2. Phạm vi sử dụng thông tin</h2>
+          <h2>Phạm vi sử dụng thông tin</h2>
           <p>
             Thông tin cá nhân chỉ được sử dụng trong nội bộ công ty và trong
             phạm vi:
           </p>
-          <ul>
+          <ol>
             <li>Xác thực tài khoản và bảo vệ quyền lợi người dùng.</li>
             <li>Liên lạc để hỗ trợ hoặc xác nhận các giao dịch liên quan.</li>
             <li>
               Thống kê, phân tích dữ liệu phục vụ công tác vận hành và phát
               triển hệ thống.
             </li>
-          </ul>
+          </ol>
         </section>
 
         <section>
-          <h2>3. Thời gian lưu trữ</h2>
+          <h2>Thời gian lưu trữ</h2>
           <p>
             Thông tin cá nhân sẽ được lưu trữ trong hệ thống của chúng tôi cho
             đến khi:
           </p>
-          <ul>
+          <ol>
             <li>Khách hàng có yêu cầu huỷ bỏ thông tin cá nhân.</li>
             <li>
               Công ty không còn nhu cầu sử dụng thông tin cho các mục đích nêu
@@ -67,16 +67,16 @@ export default function BaoMat() {
             <li>
               Thông tin hết thời hạn lưu trữ theo quy định pháp luật hiện hành.
             </li>
-          </ul>
+          </ol>
         </section>
 
         <section>
-          <h2>4. Bảo mật thông tin</h2>
+          <h2>Bảo mật thông tin</h2>
           <p>
             Anstay áp dụng các biện pháp bảo mật để bảo vệ thông tin cá nhân của
             khách hàng, bao gồm:
           </p>
-          <ul>
+          <ol>
             <li>Sử dụng giao thức HTTPS để bảo mật dữ liệu truyền tải.</li>
             <li>
               Mã hóa dữ liệu quan trọng và phân quyền truy cập rõ ràng trong hệ
@@ -86,16 +86,16 @@ export default function BaoMat() {
               Đào tạo nhân viên về bảo mật thông tin và ký cam kết bảo mật dữ
               liệu.
             </li>
-          </ul>
+          </ol>
         </section>
 
         <section>
-          <h2>5. Quyền của khách hàng</h2>
+          <h2>Quyền của khách hàng</h2>
           <p>
             Khách hàng có các quyền liên quan đến thông tin cá nhân của mình
             như:
           </p>
-          <ul>
+          <ol>
             <li>Yêu cầu xem lại thông tin cá nhân đã cung cấp.</li>
             <li>
               Chỉnh sửa, cập nhật hoặc xoá thông tin không chính xác hoặc không
@@ -106,7 +106,7 @@ export default function BaoMat() {
               Gửi phản ánh, khiếu nại liên quan đến việc bảo mật thông tin cá
               nhân.
             </li>
-          </ul>
+          </ol>
           <p>
             Để thực hiện các quyền này, khách hàng có thể liên hệ với bộ phận
             chăm sóc khách hàng qua các thông tin dưới đây.
@@ -114,12 +114,12 @@ export default function BaoMat() {
         </section>
 
         <section>
-          <h2>6. Chia sẻ thông tin</h2>
+          <h2>Chia sẻ thông tin</h2>
           <p>
             Anstay cam kết không chia sẻ, tiết lộ hoặc bán thông tin cá nhân cho
             bất kỳ bên thứ ba nào, ngoại trừ các trường hợp:
           </p>
-          <ul>
+          <ol>
             <li>Có sự đồng ý rõ ràng từ phía khách hàng.</li>
             <li>
               Phục vụ cho việc thực hiện hợp đồng giữa khách hàng và Anstay (ví
@@ -129,17 +129,17 @@ export default function BaoMat() {
               Theo yêu cầu của cơ quan pháp luật hoặc khi cần thiết để bảo vệ
               quyền lợi hợp pháp của Anstay.
             </li>
-          </ul>
+          </ol>
         </section>
 
         <section>
-          <h2>7. Chính sách cookie và theo dõi</h2>
+          <h2>Chính sách cookie và theo dõi</h2>
           <p>
             Website của Anstay có thể sử dụng cookie để lưu thông tin đăng nhập,
             lựa chọn hiển thị, và hành vi duyệt web nhằm nâng cao trải nghiệm
             người dùng.
           </p>
-          <ul>
+          <ol>
             <li>
               Bạn có thể tắt cookie thông qua trình duyệt, tuy nhiên một số tính
               năng có thể không hoạt động đầy đủ.
@@ -148,7 +148,7 @@ export default function BaoMat() {
               Thông tin cookie không được chia sẻ cho bên thứ ba ngoài mục đích
               phân tích nội bộ.
             </li>
-          </ul>
+          </ol>
         </section>
       </div>
       <Footer />

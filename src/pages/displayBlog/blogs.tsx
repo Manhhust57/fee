@@ -101,10 +101,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./blogs.css";
+console.log("✅ ENV:", import.meta.env.VITE_API_URL);
 
-const API_URL = "https://anstay.com.vn";
-const BLOG_API = `http://localhost:8080/api/v1/blog/`;
-
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
 // Dữ liệu mẫu khi chưa có API
 const MOCK_BLOGS = [
     {
@@ -165,25 +164,46 @@ const MOCK_BLOGS = [
 
 const blogs = () => {
     const [blogs, setBlogs] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const blogsPerPage = 6;
 
+        console.log("🧭 NODE_ENV:", import.meta.env.MODE);
+        console.log("🌍 VITE_API_URL:", import.meta.env.VITE_API_URL);
     useEffect(() => {
+        console.log("👉 API_URL =", API_URL);
+
+        // ✅ Nếu không có ENV thì dùng MOCK_BLOGS luôn
+        if (!API_URL ) {
+            console.warn("⚠️ Không tìm thấy ENV, dùng dữ liệu mẫu");
+            setBlogs(MOCK_BLOGS);
+            return;
+        }
+
         setIsLoading(true);
         axios
-            .get(BLOG_API)
+        axios.get(API_URL + "/blog")
+
             .then((res) => {
-                setBlogs(res.data);
-                setIsLoading(true);
+                console.log("✅ API response:", res.data);
+                const blogArray = Array.isArray(res.data)
+                    ? res.data
+                    : Array.isArray(res.data.data)
+                        ? res.data.data
+                        : [];
+
+                setBlogs(blogArray);
+                setIsLoading(false);
             })
-            .catch(() => {
-                // Khi API lỗi, sử dụng dữ liệu mẫu
-                console.log("API không khả dụng, sử dụng dữ liệu mẫu");
+            .catch((err) => {
+                console.error("❌ Lỗi API:", err.message);
+                console.log("Dùng dữ liệu mẫu thay thế");
                 setBlogs(MOCK_BLOGS);
                 setIsLoading(false);
             });
     }, []);
+
+        
 
     const publishedBlogs = blogs.filter((b) => b.status === "PUBLISHED")
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
@@ -210,8 +230,8 @@ const blogs = () => {
     // Loading state
     if (isLoading) {
         return (
-            <div className="blog-page">
-                <h1>Trải Nghiệm Du Lịch</h1>
+            <div className="blog-page1">
+                <h1>Bí kíp du lịch</h1>
                 <div className="loading">
                     <p>Đang tải dữ liệu...</p>
                 </div>
@@ -222,18 +242,31 @@ const blogs = () => {
     // Empty state
     if (publishedBlogs.length === 0) {
         return (
-            <div className="blog-page">
-                <h1>Trải Nghiệm Tour Du Lịch</h1>
+            <div className="about-content">
+                <div className="hero-section">
+                    <div className="hero-image">
+                        <img src="https://cdn.tripspoint.com/uploads/photos/426/halong-bay-tour_mpTU2.jpeg" alt="À La Carte Ha Long Bay" />
+                        <div className="hero-overlay">
+                            <div className="hero-content">
+                                <h2>Bí kíp du lịch tại Vịnh Hạ Long</h2>
+                                <p>Khám phá những câu chuyện, cảm hứng và ý tưởng du lịch độc đáo cho chuyến vi vu tiếp theo của bạn</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="blog-page">
+
+                    <h1>Bí kíp du lịch</h1>
                 <div className="empty-state">
                     <p>Chưa có bài viết nào được xuất bản.</p>
                 </div>
-            </div>
+            </div></div>
         );
     }
 
     return (
         <div className="about-content">
-        <div className="hero-section">
+            <div className="hero-section">
                 <div className="hero-image">
                     <img src="https://cdn.tripspoint.com/uploads/photos/426/halong-bay-tour_mpTU2.jpeg" alt="À La Carte Ha Long Bay" />
                     <div className="hero-overlay">
@@ -244,9 +277,9 @@ const blogs = () => {
                     </div>
                 </div>
             </div>
-        <div className="blog-page">
+            <div className="blog-page">
             
-            <h1>Trải Nghiệm Tour Du Lịch</h1>
+                <h1>Bí kíp du lịch</h1>
             
             <div className="blog-list">
                 
@@ -308,7 +341,7 @@ const blogs = () => {
                     </div>
                 ))}
             </div>
-
+                
             {/* Pagination - chỉ hiện khi có nhiều hơn 1 trang */}
             {totalPages > 1 && (
                 <div className="pagination">
@@ -353,7 +386,46 @@ const blogs = () => {
                     )}
                 </div>
             )}
-        </div></div>
+                
+            </div>
+            <footer className="blog-footer">
+                <div className="blog-footer-content">
+                    <div className="footer-left">
+                        <p>&copy; {new Date().getFullYear()} Anstay. All rights reserved.</p>
+                    </div>
+                    <div className="footer-right">
+                        <a href="https://www.facebook.com/Anstayalacarte" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                            <img
+                                src="https://i.ibb.co/dst8XydC/Facebook-Logo-2019.png"
+                                alt="facebook"
+                                className="icon-fl"
+                            />
+                        </a>
+                        <a href="https://zalo.me/0916612772" target="_blank" rel="noopener noreferrer" aria-label="Zalo">
+                            <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Icon_of_Zalo.svg/2048px-Icon_of_Zalo.svg.png"
+                                alt="zalo"
+                                className="icon-fl"
+                            />
+                        </a>
+                        <a href="https://www.youtube.com/@AnstayResidencebyALaCarte" target="_blank" rel="noopener noreferrer" aria-label="Youtube">
+                            <img
+                                src="/pictures/youtube.png"
+                                alt="instagram"
+                                className="icon-fl"
+                            />
+                        </a>
+                        <a href="https://www.instagram.com/alacarte_by_anstay/" target="_blank" rel="noopener noreferrer">
+                            <img
+                                src="/pictures/instagram.png"
+                                alt="instagram"
+                                className="icon-fl"
+                            />
+                        </a>
+                    </div>
+                </div>
+            </footer>
+        </div>
     );
 };
 

@@ -23,6 +23,10 @@ interface User {
   gender?: string;
   verified?: boolean;
 }
+
+console.log("✅ ENV:", import.meta.env.VITE_API_URL);
+
+const API_URL = import.meta.env.VITE_API_URL ;
 const LoginPopup: React.FC<LoginPopupProps> = ({ onClose, onLoginSuccess }) => {
   const [showRegister, setShowRegister] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -78,7 +82,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ onClose, onLoginSuccess }) => {
   const handleSubmit = async (event: React.FormEvent) => {
   event.preventDefault();
   try {
-    const response = await axios.post("http://localhost:8080/api/v1/auth/login", {
+    const response = await axios.post(`${API_URL}/auth/login`, {
       email,
       password,
     });
@@ -191,7 +195,7 @@ const handleRegisterSubmit = async (event: React.FormEvent) => {
 
   try {
     const response = await axios.post(
-      "http://localhost:8080/api/v1/auth/register",
+      `${API_URL}/auth/register`,
       {
         name: registerData.fullName,
         email: registerData.email,

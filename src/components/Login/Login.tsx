@@ -64,12 +64,15 @@ interface LoginValues {
   password: string;
 }
 
+console.log("✅ ENV:", import.meta.env.VITE_API_URL);
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
 const Login = ({ onCancel }: { onCancel?: () => void }) => {
   const navigate = useNavigate();
 
   const onFinish = async (values: LoginValues) => {
     try {
-      const response = await fetch("http://localhost:8080/api/v1/auth/login", {
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

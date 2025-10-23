@@ -85,6 +85,7 @@
 /* Đảm bảo dropdown căn trái tuyệt đối */
 .font-family-select,
 .font-size-select {
+  color: #000000;
   padding: 6px 12px;
   border-radius: 6px;
   border: 1px solid #ccc;

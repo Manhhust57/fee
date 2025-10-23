@@ -6,6 +6,7 @@ import "./App.css";
 import MainLayout from "./layouts/MainLayout";
 import ScrollToTop from "./components/ScrollToTop/SrcollToTop";
 import { AuthProvider } from "./Context/AuthContext";
+import BlogUser from "./pages/BlogUser/BlogUser";
 
 // Lazy load các pages
 const Home = lazy(() => import("./pages/Home/Home"));
@@ -72,11 +73,13 @@ function App() {
             {/* Routes có MainLayout */}
             <Route path="/" element={<MainLayout><Home /></MainLayout>} />
             <Route path="/policy" element={<MainLayout><Policy /></MainLayout>} />
-            <Route path="/blog" element={<MainLayout><Blogs /></MainLayout>} />
-            <Route path="/blog/id/:id" element={<MainLayout><BlogDetail /></MainLayout>} />
+            <Route path="/blog" element={<MainLayout hideFooter={true} hideFloattingContactBt={true}><Blogs /></MainLayout>} />
+            <Route path="/blog/id/:id" element={<MainLayout hideFooter={true} hideFloattingContactBt={true}><BlogDetail /></MainLayout>} />
             <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
             <Route path="/booking" element={<MainLayout><Booking /></MainLayout>} />
             <Route path="/about" element={<MainLayout><About /></MainLayout>} />
+
+            <Route path="/bloguser" element={<MainLayout><BlogUser /></MainLayout>} />
 
             {/* Apartment Routes */}
             <Route path="/apartment-ha-noi" element={<MainLayout><Apartment /></MainLayout>} />
@@ -90,7 +93,7 @@ function App() {
 
             {/* Booking Routes */}
             <Route path="/booking-page" element={<MainLayout><BookingPage /></MainLayout>} />
-
+          
             {/* About Routes */}
             <Route path="/about-us" element={<MainLayout><AboutUs /></MainLayout>} />
             <Route path="/about-us/company" element={<MainLayout><AboutCP /></MainLayout>} />

@@ -7,23 +7,23 @@ const AboutUs = () => {
   const items = [
     {
       title: "Anstay",
-      image: "https://crm.flesta.vn//uploads/about_us/ISN-JUTEC.png",
+      image: "/pictures/aboutUs1.png",
       link: "/about-us/company",
     },
     {
       title: "Nhóm Công Ty",
-      image: "https://crm.flesta.vn//uploads/about_us/Group-Companies.png",
+      image: "/pictures/aboutUs2.png",
       link: "/about-us/groupcompany",
     },
     {
       title: "Văn Hoá Công Ty",
       image:
-        "https://crm.flesta.vn//uploads/about_us/1654495624-629d99883bc28.jpg",
+        "/pictures/aboutUs3.png",
       link: "/about-us/culture",
     },
     {
       title: "Câu chuyện Anstay",
-      image: "https://crm.flesta.vn//uploads/about_us/Contact-Us.png",
+      image: "/pictures/aboutUs4.png",
       link: "/about-us/our-story",
     },
   ];

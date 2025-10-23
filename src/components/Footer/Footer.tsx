@@ -42,7 +42,7 @@ const Footer: React.FC = () => {
                 <h3>LIÊN HỆ</h3>
                 <ul>
                   <li><Link to="/about-us">Về Chúng Tôi</Link></li>
-                  <li><Link to="#">Sách Hướng Dẫn</Link></li>
+                  <li><Link to="/support">Sách Hướng Dẫn</Link></li>
                 </ul>
               </div>
 
@@ -57,7 +57,6 @@ const Footer: React.FC = () => {
                 <ul>
                   <li><Link to="/chinh-sach-bao-mat">Chính Sách Bảo Mật</Link></li>
                   <li><Link to="/chuong-trinh-hop-tac">Chương Trình Hợp Tác</Link></li>
-                  <li><Link to="/cham-soc-khach-hang">Chăm Sóc Khách Hàng</Link></li>
                 </ul>
                 <h3>THEO DÕI CHÚNG TÔI</h3>
                 <div className="social-icons">

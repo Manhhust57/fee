@@ -12,10 +12,11 @@ interface ContactForm {
 interface ContactProps {
   className?: string;
 }
-
+const API_URL = import.meta.env.VITE_API_URL; 
+console.log("✅ ENV:", import.meta.env.VITE_API_URL);
 const contactAPI = {
   create: async (data: { firstName: string; lastName: string; email: string; message: string }) => {
-    const response = await fetch('http://localhost:8080/api/v1/contact', {
+    const response = await fetch(`${API_URL}/contact`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,7 +28,7 @@ const contactAPI = {
       const errorData = await response.json();
       throw new Error(errorData.message || 'Có lỗi xảy ra khi gửi liên hệ');
     }
-
+    
     return response.json();
   }
 };

@@ -3,13 +3,20 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import FloattingContactBt from "../components/FloatingContactBt/FloattingContactBt";
 import "./MainLayout.css";
-const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+
+interface MainLayoutProps {
+  children: React.ReactNode;
+  hideFooter?: boolean; // Thêm prop này
+  hideFloattingContactBt?: boolean; // Thêm prop này
+}
+
+const MainLayout: React.FC<MainLayoutProps> = ({ children, hideFooter = false, hideFloattingContactBt = false }) => {
   return (
     <div className="layout">
       <Header />
       <main className="main-content">{children}</main>
-      <Footer />
-      <FloattingContactBt/>
+      {!hideFooter && <Footer />} {/* Chỉ hiện Footer khi hideFooter = false */}
+      {!hideFloattingContactBt && <FloattingContactBt />}
     </div>
   );
 };
