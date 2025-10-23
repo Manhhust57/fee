@@ -416,7 +416,7 @@
 .footer-right {
   display: flex !important;
   flex-direction: row !important;
-  gap: 1rem;
+  gap: 0rem;
   align-items: center;
 }
 
