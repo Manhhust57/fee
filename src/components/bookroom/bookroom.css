@@ -225,12 +225,12 @@
 
 .counter {
   display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #f5f5f5;
-    padding: 4px;
-    border-radius: 24px;
-    width: fit-content;
+  align-items: center;
+  gap: 8px;
+  background: #f5f5f5;
+  padding: 4px;
+  border-radius: 24px;
+  width: fit-content;
 }
 
 .counter button {
@@ -318,6 +318,7 @@
 }
 
 .room-description {
+  text-align: left;
   font-size: 13px;
   color: #666;
   line-height: 1.6;
@@ -348,8 +349,9 @@
 }
 
 .discount-badge {
+  text-align: left;
   background-color: #b3e5fc;
-  display: inline-block;
+  width: 15%;
   padding: 4px 12px;
   border-radius: 4px;
   font-size: 13px;
@@ -358,6 +360,7 @@
 }
 
 .room-option h3 {
+  text-align: left;
   margin: 0 0 10px 0;
   font-size: 16px;
 }
