@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import './bookroom.css';
 
 /* ===================================
@@ -42,7 +42,11 @@ interface RoomOption {
   features: string;
   refundable: boolean;
 }
-
+interface SelectedOption {
+  roomId: number;
+  optionId: number;
+  quantity: number;
+}
 /* ===================================
    COMPONENT CHÍNH
    =================================== */
@@ -52,26 +56,16 @@ const Booking: React.FC = () => {
      STATE MANAGEMENT - Quản lý trạng thái
      =================================== */
 
+  // ⭐ State mới cho API
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
   const [expanded, setExpanded] = useState<Record<number, boolean>>({});
-
-  const shortText = `Diện tích 48m² • Hướng nhìn ra thành phố • Cung cấp áo choàng tắm • Máy dò khói •
-  Điện thoại • Đầy đủ tiện nghi phòng tắm • Vòi sen • Phòng cách âm• Khu vực ăn uống •
-  Bồn rửa vệ sinh (bidet) • Tủ quần áo trong phòng •...`;
-
-  const fullText = `Diện tích 48m² • Hướng nhìn ra thành phố • Cung cấp áo choàng tắm • Máy dò khói •
-  Điện thoại • Đầy đủ tiện nghi phòng tắm • Vòi sen • Phòng cách âm • Khu vực ăn uống •
-  Bồn rửa vệ sinh (bidet) • Tủ quần áo trong phòng • Hệ thống sưởi • Máy điều hòa •
-  Dép đi trong phòng • Chăn ga cao cấp • TV • Bàn ăn • Nôi trẻ em • Két sắt đủ lớn để
-  đựng laptop • Khu vực toilet riêng biệt • Bàn làm việc • Máy sấy tóc • Cung cấp khăn
-  tắm và ga trải giường • Thang máy • Bàn ủi và bàn để ủi đồ • Phòng tắm riêng • Tủ lạnh •
-  Dầu gội • Xà phòng tắm • Ban công • Bình chữa cháy • Két an toàn trong phòng.
-  Phòng có 1 giường King, diện tích 45 - 54m², không gian cao ráo, sáng sủa, sàn gỗ tinh tế,
-  phòng tắm hiện đại, TV 50 inch, Wi-Fi miễn phí, và giường phụ có thể yêu cầu thêm (tính phí).`;
-
   const [checkInDate, setCheckInDate] = useState(() => {
-    const today = new Date();
+    const today = new Date(); // 30/10/2025
     today.setHours(0, 0, 0, 0);
-    return today;
+    return today; // ✅ 30/10/2025
   });
 
   const [checkOutDate, setCheckOutDate] = useState(() => {
@@ -85,104 +79,41 @@ const Booking: React.FC = () => {
   const [roomCount, setRoomCount] = useState(1);
   const [guests, setGuests] = useState(2);
   const [showGuestPicker, setShowGuestPicker] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState<Record<number, number>>({});
+  const [selectedOptions, setSelectedOptions] = useState<SelectedOption[]>([]);
   const [currentMonthIndex, setCurrentMonthIndex] = useState(0);
-
-  /* ===================================
-     DATA - Dữ liệu mẫu
-     =================================== */
-
-  const roomData: Room[] = [
-    {
-      id: 1,
-      name: "Deluxe City View King",
-      description: `Diện tích 48m² • Hướng nhìn ra thành phố • Cung cấp áo choàng tắm • Máy dò khói •
-  Điện thoại • Đầy đủ tiện nghi phòng tắm • Vòi sen • Phòng cách âm • Khu vực ăn uống •
-      Bồn rửa vệ sinh(bidet) • Tủ quần áo trong phòng • Hệ thống sưởi • Máy điều hòa •
-      Dép đi trong phòng • Chăn ga cao cấp • TV • Bàn ăn • Nôi trẻ em • Két sắt đủ lớn để
-  đựng laptop • Khu vực toilet riêng biệt • Bàn làm việc • Máy sấy tóc • Cung cấp khăn
-  tắm và ga trải giường • Thang máy • Bàn ủi và bàn để ủi đồ • Phòng tắm riêng • Tủ lạnh •
-      Dầu gội • Xà phòng tắm • Ban công • Bình chữa cháy • Két an toàn trong phòng.
-  Phòng có 1 giường King, diện tích 45 - 54m², không gian cao ráo, sáng sủa, sàn gỗ tinh tế,
-    phòng tắm hiện đại, TV 50 inch, Wi - Fi miễn phí, và giường phụ có thể yêu cầu thêm(tính phí).`,
-      price: 2000000,
-      discount: 20,
-      discountedPrice: 1600000,
-      totalRooms: 10,
-      maxAdults: 2,
-      maxChildren: 1,
-      images: [
-        { url: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=600&fit=crop", alt: "Deluxe City View King Room" },
-        { url: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=600&fit=crop", alt: "Deluxe Room Bathroom" },
-        { url: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop", alt: "Deluxe Room Balcony" }
-      ],
-      amenities: [{ id: 1, name: "Wi-Fi miễn phí", icon: "wifi", category: "Tiện nghi chung" }],
-      amenitiesByCategory: {}
-    },
-    {
-      id: 2,
-      name: "Ocean View Suite",
-      description: "Phòng Suite rộng rãi với ban công hướng biển",
-      price: 3500000,
-      discount: 10,
-      discountedPrice: 3150000,
-      totalRooms: 5,
-      maxAdults: 3,
-      maxChildren: 2,
-      images: [
-        { url: "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&h=600&fit=crop", alt: "Ocean View Suite" },
-        { url: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&h=600&fit=crop", alt: "Ocean Suite Living Area" },
-        { url: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=600&fit=crop", alt: "Ocean Suite Balcony" }
-      ],
-      amenities: [
-        { id: 2, name: "Ban công", icon: "balcony", category: "View" },
-        { id: 3, name: "Bồn tắm", icon: "bathtub", category: "Phòng tắm" }
-      ],
-      amenitiesByCategory: {}
-    },
-    {
-      id: 3,
-      name: "Standard Twin",
-      description: "Phòng tiêu chuẩn 2 giường đơn",
-      price: 1200000,
-      discount: 0,
-      discountedPrice: 1200000,
-      totalRooms: 15,
-      maxAdults: 2,
-      maxChildren: 1,
-      images: [
-        { url: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop", alt: "Standard Twin Room" },
-        { url: "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800&h=600&fit=crop", alt: "Standard Twin Bathroom" }
-      ],
-      amenities: [
-        { id: 4, name: "Máy lạnh", icon: "ac", category: "Tiện nghi phòng" },
-        { id: 5, name: "TV", icon: "tv", category: "Giải trí" }
-      ],
-      amenitiesByCategory: {}
-    }
-  ];
   const [currentImageIndex, setCurrentImageIndex] = useState<Record<number, number>>({});
 
-  // Hàm chuyển ảnh
-  const nextImage = (roomId: number) => {
-    const room = roomData.find(r => r.id === roomId);
-    if (!room || room.images.length <= 1) return;
+  /* ===================================
+     API FETCH - Lấy dữ liệu từ backend
+     =================================== */
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
-    setCurrentImageIndex(prev => ({
-      ...prev,
-      [roomId]: ((prev[roomId] || 0) + 1) % room.images.length
-    }));
+
+
+  const fetchRooms = async () => {
+    try {
+      console.log('🔍 Fetching rooms from API...');
+
+      const response = await fetch(`${API_URL}/rooms/`);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('✅ API Response:', data);
+
+      // API trả về { total: number, rooms: Room[] }
+      setRooms(data.rooms || []);
+      setLoading(false);
+
+    } catch (err) {
+      console.error('❌ Error fetching rooms:', err);
+      setError('404');
+      setLoading(false);
+    }
   };
 
-  const prevImage = (roomId: number) => {
-    const room = roomData.find(r => r.id === roomId);
-    if (!room || room.images.length <= 1) return;
-
-    setCurrentImageIndex(prev => ({
-      ...prev,
-      [roomId]: ((prev[roomId] || 0) - 1 + room.images.length) % room.images.length
-    }));
-  };
   /* ===================================
      CALCULATIONS - Tính toán giá trị
      =================================== */
@@ -208,28 +139,35 @@ const Booking: React.FC = () => {
         id: room.id * 10 + 2,
         roomId: room.id,
         title: 'Room + Breakfast Included!',
-        originalPrice: (room.price + 200000) * nightCount,
-        discountedPrice: (room.discountedPrice + 200000) * nightCount,
+        originalPrice: (room.price + 200000 * guests) * nightCount,
+        discountedPrice: (room.discountedPrice + 200000 * guests) * nightCount,
         discount: room.discount,
-        features: 'Đặt ngay, thanh toán sau',
+        features: 'Đặt ngay, thanh toán sau + Ăn sáng buffet',
         refundable: true
       }
     ];
   };
 
   // Tính tổng giá tất cả phòng đã chọn
+  /* ===================================
+   CALCULATIONS - Tính toán giá trị
+   =================================== */
+
+  // Tính tổng giá tất cả phòng đã chọn
   const getTotalPrice = () => {
     let total = 0;
-    Object.entries(selectedOptions).forEach(([roomId, optionId]) => {
-      const room = roomData.find(r => r.id === parseInt(roomId));
+
+    selectedOptions.forEach(selected => {
+      const room = rooms.find(r => r.id === selected.roomId);
       if (room) {
         const options = createRoomOptions(room);
-        const option = options.find(o => o.id === optionId);
+        const option = options.find(o => o.id === selected.optionId);
         if (option) {
-          total += option.discountedPrice;
+          total += option.discountedPrice * selected.quantity; // ⭐ Nhân với quantity
         }
       }
     });
+
     return total;
   };
 
@@ -264,6 +202,27 @@ const Booking: React.FC = () => {
   const isCheckOutDate = (day: number, month: number, year: number): boolean => {
     const date = new Date(year, month, day);
     return date.toDateString() === checkOutDate.toDateString();
+  };
+
+  // Hàm chuyển ảnh
+  const nextImage = (roomId: number) => {
+    const room = rooms.find(r => r.id === roomId);
+    if (!room || room.images.length <= 1) return;
+
+    setCurrentImageIndex(prev => ({
+      ...prev,
+      [roomId]: ((prev[roomId] || 0) + 1) % room.images.length
+    }));
+  };
+
+  const prevImage = (roomId: number) => {
+    const room = rooms.find(r => r.id === roomId);
+    if (!room || room.images.length <= 1) return;
+
+    setCurrentImageIndex(prev => ({
+      ...prev,
+      [roomId]: ((prev[roomId] || 0) - 1 + room.images.length) % room.images.length
+    }));
   };
 
   /* ===================================
@@ -323,6 +282,8 @@ const Booking: React.FC = () => {
 
       const nextDay = new Date(selectedDate);
       nextDay.setDate(nextDay.getDate() + 1);
+
+      nextDay.setHours(0, 0, 0, 0);
       setCheckOutDate(nextDay);
     } else {
       if (selectedDate > checkInDate) {
@@ -335,20 +296,67 @@ const Booking: React.FC = () => {
     }
   };
 
-  const handleOptionSelect = (roomId: number, optionId: number) => {
-    setSelectedOptions(prev => ({
-      ...prev,
-      [roomId]: optionId
-    }));
-  };
+  /* ===================================
+   EVENT HANDLERS - Xử lý sự kiện
+   =================================== */
 
-  const handleRemoveRoom = (roomId: number) => {
+  const handleOptionSelect = (roomId: number, optionId: number) => {
     setSelectedOptions(prev => {
-      const newOptions = { ...prev };
-      delete newOptions[roomId];
-      return newOptions;
+      // Kiểm tra đã có combo này chưa
+      const existingIndex = prev.findIndex(
+        item => item.roomId === roomId && item.optionId === optionId
+      );
+
+      if (existingIndex >= 0) {
+        // ⭐ Đã có → Tăng quantity
+        const updated = [...prev];
+        updated[existingIndex] = {
+          ...updated[existingIndex],
+          quantity: updated[existingIndex].quantity + 1
+        };
+        return updated;
+      } else {
+        // ⭐ Chưa có → Thêm mới
+        return [...prev, { roomId, optionId, quantity: 1 }];
+      }
     });
   };
+
+  const handleRemoveOption = (roomId: number, optionId: number) => {
+    setSelectedOptions(prev => {
+      const existingIndex = prev.findIndex(
+        item => item.roomId === roomId && item.optionId === optionId
+      );
+
+      if (existingIndex >= 0) {
+        const updated = [...prev];
+        const currentQuantity = updated[existingIndex].quantity;
+
+        if (currentQuantity > 1) {
+          // ⭐ Giảm quantity
+          updated[existingIndex] = {
+            ...updated[existingIndex],
+            quantity: currentQuantity - 1
+          };
+          return updated;
+        } else {
+          // ⭐ Xóa hẳn nếu quantity = 1
+          return prev.filter((_, index) => index !== existingIndex);
+        }
+      }
+
+      return prev;
+    });
+  };
+
+  const handleRemoveRoom = (roomId: number, optionId: number) => {
+    // ⭐ Xóa hẳn 1 combo
+    setSelectedOptions(prev =>
+      prev.filter(item => !(item.roomId === roomId && item.optionId === optionId))
+    );
+  };
+
+
 
   const toggleExpanded = (roomId: number) => {
     setExpanded(prev => ({
@@ -356,6 +364,101 @@ const Booking: React.FC = () => {
       [roomId]: !prev[roomId]
     }));
   };
+
+  // ⭐ State cho availability check
+  const [availabilityData, setAvailabilityData] = useState<Record<number, {
+    totalRooms: number;
+    bookedRooms: number;
+    availableRooms: number;
+    isAvailable: boolean;
+  }>>({});
+  const [checkingAvailability, setCheckingAvailability] = useState(false);
+  /* ===================================
+   AVAILABILITY CHECK - Kiểm tra phòng trống
+   =================================== */
+
+  /**
+   * Kiểm tra phòng trống khi thay đổi ngày
+   */
+  /* ===================================
+   AVAILABILITY CHECK - Kiểm tra phòng trống
+   =================================== */
+
+  /**
+   * Kiểm tra phòng trống khi thay đổi ngày
+   */
+  const checkRoomAvailability = async () => {
+    if (rooms.length === 0) return;
+
+    setCheckingAvailability(true);
+
+    try {
+      const checkIn = checkInDate.toLocaleDateString('en-CA');
+      const checkOut = checkOutDate.toLocaleDateString('en-CA');
+
+
+      console.log('🔍 Checking availability...', { checkIn, checkOut });
+
+      // ⭐ SỬA URL ĐÂY - Bỏ /api/v1
+      const response = await fetch(
+        `${API_URL}/rooms/availability?checkIn=${checkIn}&checkOut=${checkOut}`
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to check availability');
+      }
+
+      const data = await response.json();
+      console.log('✅ Availability data:', data);
+
+      // Chuyển đổi data thành object dễ truy cập
+      const availabilityMap: Record<number, any> = {};
+      data.rooms.forEach((room: any) => {
+        availabilityMap[room.id] = {
+          totalRooms: room.totalRooms,
+          bookedRooms: room.bookedRooms,
+          availableRooms: room.availableRooms,
+          isAvailable: room.isAvailable,
+        };
+      });
+
+      setAvailabilityData(availabilityMap);
+      setCheckingAvailability(false);
+    } catch (err) {
+      console.error('❌ Error checking availability:', err);
+      setCheckingAvailability(false);
+    }
+  };
+  /* ===================================
+   EFFECTS - Side effects
+   =================================== */
+
+  useEffect(() => {
+    fetchRooms();
+  }, []);
+
+  // ⭐ THÊM useEffect này
+  useEffect(() => {
+    if (rooms.length > 0 && !loading && checkInDate && checkOutDate) {
+      // Đảm bảo check-out sau check-in
+      if (checkOutDate <= checkInDate) {
+        console.warn('⚠️ Invalid date range');
+        return;
+      }
+
+      // ⭐ Debounce: Chờ 300ms
+      const timer = setTimeout(() => {
+        console.log('⏰ Debounce finished, checking availability...');
+        checkRoomAvailability();
+      }, 300);
+
+      // Cleanup: Hủy timer cũ
+      return () => {
+        console.log('🧹 Cleanup timer');
+        clearTimeout(timer);
+      };
+    }
+  }, [checkInDate, checkOutDate, rooms.length, loading]);
 
   /* ===================================
      RENDER FUNCTIONS - Các hàm render giao diện
@@ -400,6 +503,80 @@ const Booking: React.FC = () => {
       </div>
     </div>
   );
+
+  /* ===================================
+     LOADING & ERROR STATES
+     =================================== */
+
+  if (loading) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        fontSize: '1.5rem',
+        flexDirection: 'column',
+        gap: '20px'
+      }}>
+        <div className="spinner" style={{
+          border: '4px solid #f3f3f3',
+          borderTop: '4px solid #3498db',
+          borderRadius: '50%',
+          width: '50px',
+          height: '50px',
+          animation: 'spin 1s linear infinite'
+        }}></div>
+        <div>Đang tải danh sách phòng...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        fontSize: '1.2rem',
+        color: '#e74c3c',
+        flexDirection: 'column',
+        gap: '20px'
+      }}>
+        <div>❌ {error}</div>
+        <button
+          onClick={fetchRooms}
+          style={{
+            padding: '12px 24px',
+            background: '#3498db',
+            color: 'white',
+            border: 'none',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontSize: '1rem'
+          }}
+        >
+          Thử lại
+        </button>
+      </div>
+    );
+  }
+
+  if (rooms.length === 0) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        fontSize: '1.2rem',
+        color: '#666'
+      }}>
+        Không có phòng nào. Vui lòng kiểm tra database.
+      </div>
+    );
+  }
 
   /* ===================================
      MAIN RENDER - Render giao diện chính
@@ -466,22 +643,62 @@ const Booking: React.FC = () => {
               className="guest-picker-popup"
               onClick={(e) => e.stopPropagation()}
             >
+
               <div className="guest-control">
                 <span>Phòng</span>
                 <div className="counter">
                   <button onClick={() => setRoomCount(Math.max(1, roomCount - 1))}>-</button>
                   <span>{roomCount}</span>
-                  <button onClick={() => setRoomCount(roomCount + 1)}>+</button>
+                  {/* ⭐ THÊM giới hạn max 20 */}
+                  <button
+                    onClick={() => setRoomCount(Math.min(20, roomCount + 1))}
+                    disabled={roomCount >= 20}
+                    style={{
+                      cursor: roomCount >= 20 ? 'not-allowed' : 'pointer',
+                      opacity: roomCount >= 20 ? 0.5 : 1
+                    }}
+                  >
+                    +
+                  </button>
                 </div>
+                {/* ⭐ THÊM text cảnh báo */}
+                {roomCount >= 20 && (
+                  <div style={{
+                    fontSize: '0.5rem',
+                    color: '#e74c3c',
+                    marginTop: '4px'
+                  }}>
+                    Tối đa 20 phòng
+                  </div>
+                )}
               </div>
-
               <div className="guest-control">
                 <span>Khách</span>
                 <div className="counter">
                   <button onClick={() => setGuests(Math.max(1, guests - 1))}>-</button>
                   <span>{guests}</span>
-                  <button onClick={() => setGuests(guests + 1)}>+</button>
+                  {/* ⭐ THÊM giới hạn max 10 */}
+                  <button
+                    onClick={() => setGuests(Math.min(20, guests + 1))}
+                    disabled={guests >= 20}
+                    style={{
+                      cursor: guests >= 20 ? 'not-allowed' : 'pointer',
+                      opacity: guests >= 20 ? 0.5 : 1
+                    }}
+                  >
+                    +
+                  </button>
                 </div>
+                {/* ⭐ THÊM text cảnh báo */}
+                {guests >= 20 && (
+                  <div style={{
+                    fontSize: '0.5rem',
+                    color: '#e74c3c',
+                    marginTop: '4px'
+                  }}>
+                    Tối đa 20 khách
+                  </div>
+                )}
               </div>
 
               <button
@@ -502,26 +719,27 @@ const Booking: React.FC = () => {
 
       <div className="content-wrapper">
         <div className="left-panel">
-          {/* HIỂN THỊ TẤT CẢ CÁC PHÒNG */}
-          {roomData.map((room) => {
+          {/* ⭐ HIỂN THỊ TẤT CẢ CÁC PHÒNG TỪ API */}
+          {rooms.map((room) => {
             const roomOptions = createRoomOptions(room);
             const selectedOptionId = selectedOptions[room.id];
             const isExpanded = expanded[room.id];
 
+            const availability = availabilityData[room.id];
             return (
               <div key={room.id} className="room-section">
                 <div className="room-header">
                   <div className="room-image-container">
                     <img
-                      src={room.images[currentImageIndex[room.id] || 0]?.url || "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=600&fit=crop"}
-                      alt={room.images[currentImageIndex[room.id] || 0]?.alt || "Room"}
+                      src={room.images[currentImageIndex[room.id] || 0]?.url || "https://via.placeholder.com/800x600"}
+                      alt={room.images[currentImageIndex[room.id] || 0]?.alt || room.name}
                       loading="lazy"
                       className="room-image"
                       onError={(e) => {
-                        // Fallback nếu ảnh không load được
-                        e.currentTarget.src = "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=600&fit=crop";
+                        e.currentTarget.src = "https://via.placeholder.com/800x600";
                       }}
                     />
+
                     {/* Navigation buttons cho ảnh */}
                     {room.images.length > 1 && (
                       <>
@@ -556,74 +774,215 @@ const Booking: React.FC = () => {
                     <h2>{room.name}</h2>
 
                     <div className="room-specs">
-                      <span>Sleeps {room.maxAdults}</span>
-                      <span>1 King bed</span>
-                      <span>1 Bathroom</span>
+                      <span>Sleeps {room.maxAdults + room.maxChildren}</span>
+                      <span>{room.maxAdults} người lớn</span>
+                      <span>{room.maxChildren} trẻ em</span>
                     </div>
 
-                    <div className="room-description">
-                      {isExpanded ? room.description : room.description.slice(0, 300) + (room.description.length > 300 ? "..." : "")}
-                    </div>
+                    {room.amenities && room.amenities.length > 0 && (
+                      <div style={{ marginTop: '12px' }}>
+                        <strong style={{ display: 'block', marginBottom: '8px' }}>
+                          Tiện nghi:
+                        </strong>
 
-                    <div
-                      className="more-info"
-                      style={{ color: "blue", cursor: "pointer", marginTop: "8px" }}
-                      onClick={() => toggleExpanded(room.id)}
-                    >
-                      {isExpanded ? "Rút gọn" : "Đầy đủ"}
-                    </div>
+                        {/* Rút gọn - Hiển thị 10 tiện nghi đầu */}
+                        {!isExpanded && (
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                            {room.amenities.slice(0, 10).map((amenity) => (
+                              <span
+                                key={amenity.id}
+                                style={{
+                                  background: '#f0f0f0',
+                                  padding: '4px 10px',
+                                  borderRadius: '4px',
+                                  fontSize: '0.8rem',
+                                  color: '#555'
+                                }}
+                              >
+                                • {amenity.name}
+                              </span>
+                            ))}
+                            {room.amenities.length > 10 && (
+                              <span
+                                style={{
+                                  background: '#e3f2fd',
+                                  color: '#1976d2',
+                                  padding: '4px 10px',
+                                  borderRadius: '4px',
+                                  fontSize: '0.8rem',
+                                  fontWeight: '500'
+                                }}
+                              >
+                                +{room.amenities.length - 10} tiện nghi
+                              </span>
+                            )}
+                          </div>
+                        )}
+
+                        {/* Đầy đủ - Hiển thị tất cả tiện nghi */}
+                        {isExpanded && (
+                          <div style={{
+                            padding: '12px',
+                            background: '#f9f9f9',
+                            borderRadius: '6px',
+                            marginTop: '8px'
+                          }}>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                              {room.amenities.map((amenity) => (
+                                <span
+                                  key={amenity.id}
+                                  style={{
+                                    background: '#f0f0f0',
+                                    padding: '4px 10px',
+                                    borderRadius: '4px',
+                                    fontSize: '0.8rem',
+                                    color: '#555'
+                                  }}
+                                >
+                                  • {amenity.name}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  <div
+                    className="none"
+                  >
+                  </div>
+                  <div
+                    className="more-info"
+                    style={{ color: "blue", cursor: "pointer", marginTop: "8px" }}
+                    onClick={() => toggleExpanded(room.id)}
+                  >
+                    {isExpanded ? "Rút gọn" : "Xem đầy đủ"}
                   </div>
                 </div>
 
                 {/* Hiển thị các options cho phòng này */}
-                {roomOptions.map((option) => (
-                  <div
-                    key={option.id}
-                    className={`room-option ${selectedOptionId === option.id ? 'selected' : ''}`}
-                  >
-                    {option.discount > 0 && (
-                      <div className="discount-badge">Save {option.discount}%</div>
-                    )}
-                    <h3>{option.title}</h3>
+                {roomOptions.map((option) => {
+                  // ⭐ Kiểm tra option này đã được chọn chưa
+                  const selectedItem = selectedOptions.find(
+                    item => item.roomId === room.id && item.optionId === option.id
+                  );
+                  const isSelected = !!selectedItem;
+                  const quantity = selectedItem?.quantity || 0;
 
-                    <div className="feature-item">
-                      <span className="check">✓</span>
-                      <span className="feature-text">{option.features}</span>
-                    </div>
+                  return (
+                    <div
+                      key={option.id}
+                      className={`room-option ${isSelected ? 'selected' : ''}`}
+                    >
+                      {option.discount > 0 && (
+                        <div className="discount-badge">Save {option.discount}%</div>
+                      )}
 
-                    <div className="info-item">
-                      <span>ⓘ</span>
-                      <span>Không hoàn tiền</span>
-                    </div>
-
-                    <div className="option-footer">
-                      <div className="more-info">More info</div>
-
-                      <div className="price-section">
-                        <div className="price-info">
-                          <div className="original-price">
-                            VND {option.originalPrice.toLocaleString('vi-VN')}
-                          </div>
-
-                          <div className="discounted-price">
-                            VND {option.discountedPrice.toLocaleString('vi-VN')}
-                          </div>
-
-                          <div className="price-label">
-                            Cost for {nightCount} night, {guests} guests
-                          </div>
+                      {/* ⭐ Badge số lượng đã chọn */}
+                      {isSelected && (
+                        <div style={{
+                          position: 'absolute',
+                          top: '12px',
+                          right: '12px',
+                          background: '#ffffffff',
+                          color: 'white',
+                          padding: '6px 12px',
+                          borderRadius: '20px',
+                          fontSize: '0.9rem',
+                          fontWeight: 'bold'
+                        }}>
+                          x{quantity}
                         </div>
+                      )}
 
-                        <button
-                          className={`select-btn ${selectedOptionId === option.id ? 'selected' : ''}`}
-                          onClick={() => handleOptionSelect(room.id, option.id)}
-                        >
-                          Select
-                        </button>
+                      <h3>{option.title}</h3>
+
+                      <div className="feature-item">
+                        <span className="check">✓</span>
+                        <span className="feature-text">{option.features}</span>
+                      </div>
+
+                      <div className="info-item">
+                        <span>ⓘ</span>
+                        <span>{option.refundable ? 'Có hoàn tiền' : 'Không hoàn tiền'}</span>
+                      </div>
+
+                      <div className="option-footer">
+                        <div className="more-info">More info</div>
+
+                        <div className="price-section">
+                          <div className="price-info">
+                            <div className="original-price">
+                              VND {option.originalPrice.toLocaleString('vi-VN')}
+                            </div>
+
+                            <div className="discounted-price">
+                              VND {option.discountedPrice.toLocaleString('vi-VN')}
+                            </div>
+
+                            <div className="price-label">
+                              Tính cho {nightCount} đêm, {guests} khách
+                            </div>
+                          </div>
+
+                          {/* ⭐ Nút + và - */}
+                          {isSelected ? (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                              <button
+                                className="quantity-btn"
+                                onClick={() => handleRemoveOption(room.id, option.id)}
+                                style={{
+                                  padding: '8px 16px',
+                                  background: '#ffffffff',
+                                  color: 'black',
+                                  border: 'solid 1px #ccc',
+                                  borderRadius: '6px',
+                                  cursor: 'pointer',
+                                  fontSize: '1.2rem',
+                                  fontWeight: 'bold'
+                                }}
+                              >
+                                −
+                              </button>
+                              <span style={{
+                                fontSize: '1.2rem',
+                                fontWeight: 'bold',
+                                minWidth: '30px',
+                                textAlign: 'center'
+                              }}>
+                                {quantity}
+                              </span>
+                              <button
+                                className="quantity-btn"
+                                onClick={() => handleOptionSelect(room.id, option.id)}
+                                style={{
+                                  padding: '8px 16px',
+                                  background: '#ffffffff',
+                                  color: 'black',
+                                  border: 'solid 1px #ccc',
+                                  borderRadius: '6px',
+                                  cursor: 'pointer',
+                                  fontSize: '1.2rem',
+                                  fontWeight: 'bold'
+                                }}
+                              >
+                                +
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              className="select-btn"
+                              onClick={() => handleOptionSelect(room.id, option.id)}
+                            >
+                              Select
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
 
                 {/* Đường phân cách giữa các phòng */}
                 <div className="room-divider"></div>
@@ -634,32 +993,51 @@ const Booking: React.FC = () => {
 
         <div className="right-panel">
           <div className="booking-summary">
+
+
+
+
             <h2 className="total-header">
               VND {totalPrice.toLocaleString('vi-VN')}
-              <span className="total-label">total</span>
+              <span className="total-label"> total</span>
             </h2>
 
             <div className="booking-details">
               <div>{formatDate(checkInDate)} – {formatDate(checkOutDate)}</div>
               <div>{nightCount} night</div>
-              <div>{roomCount} room, {guests} guests</div>
+              <div>
+                {selectedOptions.reduce((sum, item) => sum + item.quantity, 0)} room(s), {guests} guests
+              </div>
             </div>
 
-            {/* Hiển thị tất cả phòng đã chọn */}
-            {Object.entries(selectedOptions).map(([roomId, optionId]) => {
-              const room = roomData.find(r => r.id === parseInt(roomId));
-              const roomOptions = createRoomOptions(room!);
-              const option = roomOptions.find(o => o.id === optionId);
+            {/* ⭐ Hiển thị tất cả phòng đã chọn */}
+            {selectedOptions.map((selected, index) => {
+              const room = rooms.find(r => r.id === selected.roomId);
+              if (!room) return null;
 
-              if (!room || !option) return null;
+              const roomOptions = createRoomOptions(room);
+              const option = roomOptions.find(o => o.id === selected.optionId);
+              if (!option) return null;
 
               return (
-                <div key={roomId} className="selected-room">
+                <div key={index} className="selected-room">
                   <div className="selected-header">
-                    <span>{room.name} - {option.title}</span>
+                    <span>
+                      {room.name} - {option.title}
+                      <span style={{
+                        marginLeft: '8px',
+                        padding: '2px 8px',
+                        background: 'rgb(246 236 0)',
+                        color: 'white',
+                        borderRadius: '10px',
+                        fontSize: '0.85rem'
+                      }}>
+                        x{selected.quantity}
+                      </span>
+                    </span>
                     <span
                       className="delete-icon"
-                      onClick={() => handleRemoveRoom(parseInt(roomId))}
+                      onClick={() => handleRemoveRoom(selected.roomId, selected.optionId)}
                     >
                       🗑
                     </span>
@@ -667,15 +1045,13 @@ const Booking: React.FC = () => {
 
                   <div className="selected-info">
                     {guests} guests {nightCount} night
-                    <div>Non-refundable</div>
+                    <div>{option.refundable ? 'Refundable' : 'Non-refundable'}</div>
                   </div>
 
                   <div className="selected-price">
-                    VND {option.discountedPrice.toLocaleString('vi-VN')}
+                    VND {(option.discountedPrice * selected.quantity).toLocaleString('vi-VN')}
                   </div>
-
                 </div>
-
               );
             })}
 
@@ -684,8 +1060,29 @@ const Booking: React.FC = () => {
                 <span>Total</span>
                 <span>VND {totalPrice.toLocaleString('vi-VN')}</span>
               </div>
-              <div className="tax-info">Includes taxes + fees</div>
+              <div className="tax-info">Bao gốm thuế + phí</div>
             </div>
+
+
+
+            <button
+              className="book-btn"
+              disabled={selectedOptions.length === 0}
+              onClick={() => {
+                const summary = selectedOptions.map(s => {
+                  const room = rooms.find(r => r.id === s.roomId);
+                  const options = createRoomOptions(room!);
+                  const option = options.find(o => o.id === s.optionId);
+                  return `${room?.name} (${option?.title}) x${s.quantity}`;
+                }).join('\n');
+                alert(`Booking confirmed!\n\n${summary}\n\nTotal: ${totalPrice.toLocaleString('vi-VN')}đ`);
+              }}
+            >
+              Book ({selectedOptions.reduce((sum, item) => sum + item.quantity, 0)} room{selectedOptions.reduce((sum, item) => sum + item.quantity, 0) > 1 ? 's' : ''})
+            </button>
+
+
+
 
             {Object.keys(selectedOptions).length > 0 && (
               <div className="payment-info">
@@ -694,16 +1091,17 @@ const Booking: React.FC = () => {
               </div>
             )}
 
-            <button
-              className="book-btn"
-              disabled={Object.keys(selectedOptions).length === 0}
-              onClick={() => alert('Booking confirmed!')}
-            >
-              Book ({Object.keys(selectedOptions).length} room{Object.keys(selectedOptions).length > 1 ? 's' : ''})
-            </button>
+
           </div>
         </div>
       </div>
+
+      <style>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 };
