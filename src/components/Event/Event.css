@@ -196,9 +196,11 @@
 
 @media (max-width: 480px) {
   .luxury-accommodations {
-      padding: 4px 26px;
-      height: auto;
+    padding: 4px 26px;
+    height: auto;
+    margin-top: 50px;
   }
+
   .main-title {
     font-size: 1.25rem;
   }
@@ -224,15 +226,17 @@
     font-size: 0.9rem;
     margin-top: 6px;
   }
-    .destinations-grid {
-      grid-template-columns: 0.5fr 0.5fr ;
-      /* Same layout */
-      grid-template-rows: 0.5fr 0.5fr ;
-      gap: 12px;
-      /* Smaller gap */
-      margin-bottom: 13px;
-    }
-        .large-card {
-          grid-columns: span 2;
-        }
+
+  .destinations-grid {
+    grid-template-columns: 0.5fr 0.5fr;
+    /* Same layout */
+    grid-template-rows: 0.5fr 0.5fr;
+    gap: 12px;
+    /* Smaller gap */
+    margin-bottom: 13px;
+  }
+
+  .large-card {
+    grid-columns: span 2;
+  }
 }

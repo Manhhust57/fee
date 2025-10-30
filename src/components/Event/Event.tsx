@@ -124,7 +124,7 @@ const Event = () => {
         <h1 className="main-title">
           Sự kiện nổi bật
         </h1>
-        
+
       </div>
 
       {/* Grid Layout */}
@@ -206,7 +206,7 @@ const Event = () => {
       </div>
 
       {/* View All Button */}
-      
+
     </div>
   );
 };

@@ -13,6 +13,12 @@
   position: relative;
 }
 
+.room-divider {
+  height: 1px;
+  background-color: #0bb8f7;
+  margin: 20px 0;
+}
+
 .search-bar {
   background-color: #fff;
   padding: 20px;
@@ -293,8 +299,28 @@
   border-radius: 8px;
   margin-bottom: 15px;
   border: 1px solid #ddd;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
   gap: 20px;
+}
+
+@media (max-width: 480px) {
+  .booking-container {
+    padding: 10px 10px 10px 10px;
+  }
+
+  .room-header {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    display: grid;
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+  }
 }
 
 .room-image {
@@ -594,5 +620,544 @@
 
   .booking-summary {
     position: static;
+  }
+}
+
+/* ✅ Responsive tổng thể cho mọi kích thước màn hình */
+
+/* === Laptop nhỏ / Tablet ngang (≤1199px) === */
+@media (max-width: 1199px) {
+  .booking-container {
+    padding: 5% 30px;
+  }
+
+  .search-bar {
+    gap: 100px;
+  }
+
+  .room-image {
+    width: 250px;
+    height: 180px;
+  }
+
+  .content-wrapper {
+    gap: 15px;
+  }
+}
+
+/* === Tablet dọc / Điện thoại lớn (≤767px) === */
+@media (max-width: 767px) {
+  .booking-container {
+    padding: 20px;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  .content-wrapper {
+    flex-direction: column;
+  }
+
+  .room-header {
+    grid-template-columns: 1fr;
+  }
+
+  .room-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .room-info h2 {
+    font-size: 18px;
+  }
+
+  .room-description {
+    font-size: 13px;
+  }
+
+  .discount-badge {
+    width: fit-content;
+    font-size: 12px;
+    padding: 3px 8px;
+  }
+
+  .price-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .select-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .booking-summary {
+    position: static;
+    margin-top: 20px;
+  }
+}
+
+/* === Điện thoại nhỏ (≤480px) === */
+@media (max-width: 480px) {
+  .booking-container {
+    padding: 10px;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .room-header {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .room-option {
+    padding: 15px;
+  }
+
+  .price-info .discounted-price {
+    font-size: 16px;
+  }
+
+  .book-btn {
+    font-size: 15px;
+    padding: 12px;
+  }
+}
+
+/* === Desktop lớn (≥1400px) === */
+@media (min-width: 1400px) {
+  .booking-container {
+    max-width: 1600px;
+    padding: 60px;
+  }
+}
+
+/* ✅ Responsive tổng thể cho mọi kích thước màn hình */
+
+/* === Laptop nhỏ / Tablet ngang (≤1199px) === */
+@media (max-width: 1199px) {
+  .booking-container {
+    padding: 5% 30px;
+  }
+
+  .search-bar {
+    gap: 100px;
+  }
+
+  .room-image {
+    width: 250px;
+    height: 180px;
+  }
+
+  .content-wrapper {
+    gap: 15px;
+  }
+}
+
+/* === Tablet dọc / Điện thoại lớn (≤767px) === */
+@media (max-width: 767px) {
+  .booking-container {
+    padding: 20px;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  .content-wrapper {
+    flex-direction: column;
+  }
+
+  .room-header {
+    grid-template-columns: 1fr;
+  }
+
+  .room-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .room-info h2 {
+    font-size: 18px;
+  }
+
+  .room-description {
+    font-size: 13px;
+  }
+
+  .discount-badge {
+    width: fit-content;
+    font-size: 12px;
+    padding: 3px 8px;
+  }
+
+  .price-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .select-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .booking-summary {
+    position: static;
+    margin-top: 20px;
+  }
+}
+
+/* === Điện thoại nhỏ (≤480px) === */
+@media (max-width: 480px) {
+  .booking-container {
+    padding: 10px;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .room-header {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .room-option {
+    padding: 15px;
+  }
+
+  .price-info .discounted-price {
+    font-size: 16px;
+  }
+
+  .book-btn {
+    font-size: 15px;
+    padding: 12px;
+  }
+}
+
+/* === Desktop lớn (≥1400px) === */
+@media (min-width: 1400px) {
+  .booking-container {
+    max-width: 1600px;
+    padding: 60px;
+  }
+}
+
+.room-image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.image-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 50%;
+  z-index: 2;
+  transition: background 0.3s;
+}
+
+.image-nav-btn:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.prev-btn {
+  left: 10px;
+}
+
+.next-btn {
+  right: 10px;
+}
+
+.image-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dot.active {
+  background: white;
+}
+
+.dot:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.room-image-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.room-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.image-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 50%;
+  z-index: 10;
+  transition: all 0.3s ease;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+}
+
+.image-nav-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.prev-btn {
+  left: 10px;
+}
+
+.next-btn {
+  right: 10px;
+}
+
+.image-dots {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dot.active {
+  background: white;
+  transform: scale(1.2);
+}
+
+.dot:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(1.1);
+}
+
+/* Responsive cho mobile */
+@media (max-width: 768px) {
+  .image-nav-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    padding: 6px 8px;
+  }
+
+  .prev-btn {
+    left: 5px;
+  }
+
+  .next-btn {
+    right: 5px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .image-dots {
+    bottom: 10px;
+    gap: 4px;
+  }
+}
+
+/* Ẩn navigation khi hover ra ngoài container */
+.room-image-container:not(:hover) .image-nav-btn {
+  opacity: 0.5;
+}
+
+.room-image-container:hover .image-nav-btn {
+  opacity: 0.8;
+}
+
+/* Thêm vào file CSS hiện có */
+
+.room-image-container {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  /* Chiều cao cố định */
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.room-image {
+  width: 100%;
+  /* Chiều ngang full */
+  height: 100%;
+  /* Chiều cao full container */
+  object-fit: cover;
+  /* Giữ tỷ lệ ảnh, cắt phần thừa */
+  object-position: center;
+  /* Căn giữa ảnh */
+  display: block;
+}
+
+.image-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 20px;
+  border-radius: 50%;
+  z-index: 10;
+  transition: all 0.3s ease;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+}
+
+.image-nav-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.prev-btn {
+  left: 10px;
+}
+
+.next-btn {
+  right: 10px;
+}
+
+.image-dots {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dot.active {
+  background: white;
+  transform: scale(1.2);
+}
+
+.dot:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(1.1);
+}
+
+/* Ẩn navigation khi hover ra ngoài */
+.room-image-container:not(:hover) .image-nav-btn {
+  opacity: 0.5;
+}
+
+.room-image-container:hover .image-nav-btn {
+  opacity: 0.8;
+}
+
+/* Responsive - điều chỉnh chiều cao theo screen size */
+@media (max-width: 1200px) {
+  .room-image-container {
+    height: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .room-image-container {
+    height: 200px;
+  }
+
+  .image-nav-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+
+  .prev-btn {
+    left: 5px;
+  }
+
+  .next-btn {
+    right: 5px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .room-image-container {
+    height: 180px;
   }
 }

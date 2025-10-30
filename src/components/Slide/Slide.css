@@ -6,7 +6,8 @@
   overflow: hidden;
   margin-top: 60px;
 }
-.slider-title{
+
+.slider-title {
   color: #ffffff;
 }
 
@@ -16,7 +17,8 @@ video {
   height: 100%;
 }
 
-.slider-image {height: 100%;
+.slider-image {
+  height: 100%;
   width: 100vw;
   background-size: cover;
   background-position: center;
@@ -48,7 +50,7 @@ video {
     /* căn giữa text cho đẹp */
     padding-left: 10px;
     padding-top: 40px;
-    
+
   }
 }
 
@@ -292,6 +294,10 @@ video {
 
   .slider-image {
     height: 100%;
+  }
+
+  .slider-search-container {
+    margin-top: 100px;
   }
 }
 

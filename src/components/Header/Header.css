@@ -12,34 +12,41 @@
   transition: height 0.3s ease;
   font-size: 12px;
 }
+
 .header1-logo {
   margin-top: 4px;
   margin-left: 40px;
   width: 115px;
   height: 54px;
   object-fit: contain;
-      /* bỏ margin-left */
+  /* bỏ margin-left */
   transition: width 0.3s ease, height 0.3s ease;
 }
 
 .header-logo-container {
   flex-shrink: 0;
   order: 1;
-  margin-left: 5px;   /* cách trái 5px */
-  padding-left: 0;    /* bỏ padding dư */
+  margin-left: 5px;
+  /* cách trái 5px */
+  padding-left: 0;
+  /* bỏ padding dư */
   transition: margin 0.3s ease, padding 0.3s ease;
 }
+
 .header-container {
-    font-size: 12px;
+  font-size: 12px;
   display: flex;
   width: 100%;
-  margin: 0;              /* bỏ căn giữa */
+  margin: 0;
+  /* bỏ căn giữa */
   height: 60px;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px 0 5px;  /* padding-left = 5px */
+  padding: 0 20px 0 5px;
+  /* padding-left = 5px */
   transition: height 0.3s ease, padding 0.3s ease;
 }
+
 .header-nav {
   display: flex;
   justify-content: center;
@@ -51,34 +58,42 @@
   flex-shrink: 0;
   transition: gap 0.3s ease;
 }
+
 .header-select {
   display: flex;
   gap: 40px;
   justify-content: flex-end;
-  align-items: center; /* Ensure vertical alignment */
+  align-items: center;
+  /* Ensure vertical alignment */
   width: auto;
   padding-left: 0;
   padding-top: 0;
   flex-shrink: 0;
   order: 3;
-  margin-right: 20px; /* Thêm khoảng cách từ cạnh phải */
+  margin-right: 20px;
+  /* Thêm khoảng cách từ cạnh phải */
   transition: gap 0.3s ease;
 }
+
 .header-nav-container {
   display: flex;
   flex-direction: row;
   margin: 0;
   align-items: center;
-  z-index: 1000; /* Ensure it appears above the overlay */
+  z-index: 1000;
+  /* Ensure it appears above the overlay */
   gap: 30px;
   flex-shrink: 0;
   order: 2;
   flex: 1;
   justify-content: center;
-  margin-left: 80px; /* Tăng khoảng cách từ logo */
-  margin-right: 80px; /* Tăng khoảng cách đến menu bên phải */
+  margin-left: 80px;
+  /* Tăng khoảng cách từ logo */
+  margin-right: 80px;
+  /* Tăng khoảng cách đến menu bên phải */
   transition: margin 0.3s ease, gap 0.3s ease;
 }
+
 .select-nav {
   display: flex;
   align-items: center;
@@ -94,11 +109,13 @@
   background-color: #f8fafc;
   transform: translateY(-1px);
 }
+
 .user-menu {
   position: relative;
   display: inline-block;
   cursor: pointer;
 }
+
 .user-info {
   cursor: pointer;
   display: flex;
@@ -107,6 +124,7 @@
   font-weight: 600;
   transition: all 0.3s ease;
 }
+
 .dropdown {
   position: absolute;
   right: 0;
@@ -124,6 +142,7 @@
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
 }
+
 .dropdown button {
   width: 100%;
   padding: 10px 16px;
@@ -159,15 +178,20 @@
 
 .user-menu.active .dropdown {
   display: flex;
-  flex-direction: column; /* Ensure dropdown items stack vertically */
+  flex-direction: column;
+  /* Ensure dropdown items stack vertically */
   transition: all 0.3s ease;
 }
 
 .header-nav .ant-dropdown {
-  position: relative; /* Ensure dropdown is positioned relative to its parent */
-  margin-top: 0; /* Remove spacing to keep on same line */
-  width: auto; /* Allow dropdown to size naturally */
-  text-align: left; /* Align text to the left */
+  position: relative;
+  /* Ensure dropdown is positioned relative to its parent */
+  margin-top: 0;
+  /* Remove spacing to keep on same line */
+  width: auto;
+  /* Allow dropdown to size naturally */
+  text-align: left;
+  /* Align text to the left */
   display: flex;
   align-items: center;
   height: 100%;
@@ -175,12 +199,15 @@
 }
 
 .header-nav .ant-dropdown-menu {
-  position: absolute; /* Change to absolute for proper dropdown positioning */
-  margin-top: 0; /* Remove spacing to keep on same line */
+  position: absolute;
+  /* Change to absolute for proper dropdown positioning */
+  margin-top: 0;
+  /* Remove spacing to keep on same line */
   background-color: white;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1000; /* Ensure it appears above other elements */
+  z-index: 1000;
+  /* Ensure it appears above other elements */
   overflow: hidden;
   top: 100%;
   left: 0;
@@ -234,12 +261,14 @@
   color: #1ac3d9;
   transform: scale(1.1);
 }
-a:hover{
+
+a:hover {
   color: #1ac3d9;
 }
 
 .btn-login {
-  display: inline-block; /* Prevent block-level behavior */
+  display: inline-block;
+  /* Prevent block-level behavior */
   text-align: center;
   background: linear-gradient(135deg, #6366f1, #1ac3d9);
   border: none;
@@ -257,8 +286,7 @@ a:hover{
 }
 
 .btn-login:hover {
-  background: linear-gradient(135deg,#1ac3d9,#6366f1
-    );
+  background: linear-gradient(135deg, #1ac3d9, #6366f1);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
@@ -274,13 +302,17 @@ a:hover{
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
-  z-index: 999; /* Ensure it appears above other elements */
-  display: none; /* Hidden by default */
+  background-color: rgba(132, 132, 132, 0.5);
+  /* Dark overlay */
+  z-index: 999;
+  /* Ensure it appears above other elements */
+  display: none;
+  /* Hidden by default */
 }
 
 .header-nav-overlay.active {
-  display: block; /* Show when active */
+  display: block;
+  /* Show when active */
 }
 
 @media (max-width: 1024px) {
@@ -303,14 +335,15 @@ a:hover{
     padding-left: 0;
     justify-content: right;
   }
-  
+
   .header-nav-container {
     flex: 1;
     justify-content: center;
-    margin-left: 60px; /* Giảm khoảng cách trên màn hình vừa */
+    margin-left: 60px;
+    /* Giảm khoảng cách trên màn hình vừa */
     margin-right: 60px;
   }
-  
+
   .header-logo-container {
     margin-left: 5px;
   }
@@ -340,6 +373,7 @@ a:hover{
     gap: 16px;
     padding: 10px;
   }
+
   .header-nav::after {
     content: "";
     display: block;
@@ -356,16 +390,17 @@ a:hover{
     padding: 10px;
     gap: 10px;
   }
-  
+
   .header-nav-container {
     margin-left: 0;
-    margin-right: 0; /* Reset margin trên mobile */
+    margin-right: 0;
+    /* Reset margin trên mobile */
   }
-  
+
   .header-logo-container {
     margin-left: 5px;
   }
-  
+
   .header-container {
     display: flex;
     justify-content: space-between;
@@ -375,13 +410,13 @@ a:hover{
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
-  
+
   .header-logo-container {
     flex: 1;
     margin-left: 5px;
     padding-left: 0;
   }
-  
+
   .header-nav-container {
     display: none;
     flex-direction: column-reverse;
@@ -397,7 +432,9 @@ a:hover{
 
   .header-nav-container.active {
     display: flex;
+    margin-right: 500px;
   }
+
   .hamburger {
     margin-right: -5px;
     display: flex;
@@ -413,6 +450,7 @@ a:hover{
     height: 3px;
     background-color: #333;
   }
+
   .header1-logo {
     float: left;
   }
@@ -421,9 +459,11 @@ a:hover{
 /* Responsive cho màn hình rất nhỏ (dưới 480px) */
 @media (max-width: 480px) {
   .header {
-    height: auto; /* Cho phép header co giãn theo nội dung */
+    height: auto;
+    /* Cho phép header co giãn theo nội dung */
     /* Thêm padding để đảm bảo dropdown hiển thị đúng */
   }
+
   .header-nav button {
     background-color: #f6f6f6;
   }
@@ -457,6 +497,8 @@ a:hover{
   /* Hiển thị menu khi active */
   .header-nav-container.active {
     display: flex;
+    margin-right: 52%;
+    margin-top: 1%;
   }
 
   /* Thiết lập cho hamburger */
@@ -478,19 +520,25 @@ a:hover{
 
   /* Các mục trong menu */
   .dropdown-wrapper {
-    margin-top: 10px; /* Thêm khoảng cách để đẩy các phần tử khác xuống */
+    margin-top: 10px;
+    /* Thêm khoảng cách để đẩy các phần tử khác xuống */
   }
 
   .dropdown-menu {
-    position: static; /* Đảm bảo dropdown nằm trong dòng chảy layout */
-    display: block; /* Đảm bảo nó không "nổi lên" */
+    position: static;
+    /* Đảm bảo dropdown nằm trong dòng chảy layout */
+    display: block;
+    /* Đảm bảo nó không "nổi lên" */
     padding: 0;
-    margin-top: 10px; /* Thêm một chút khoảng cách nếu cần */
+    margin-top: 10px;
+    /* Thêm một chút khoảng cách nếu cần */
   }
 
   .dropdown-submenu {
-    position: static; /* Đảm bảo menu không "nổi lên" */
-    display: block; /* Đảm bảo menu cấp 2 cũng chiếm không gian */
+    position: static;
+    /* Đảm bảo menu không "nổi lên" */
+    display: block;
+    /* Đảm bảo menu cấp 2 cũng chiếm không gian */
     margin-left: 20px;
     padding: 5px 0;
   }
@@ -501,7 +549,8 @@ a:hover{
     cursor: pointer;
     width: 100%;
     text-align: left;
-    border-bottom: 1px solid #ddd; /* Đảm bảo có đường viền ngăn cách */
+    border-bottom: 1px solid #ddd;
+    /* Đảm bảo có đường viền ngăn cách */
   }
 
   /* Cấp 3 */
@@ -511,11 +560,13 @@ a:hover{
     max-height: 250px;
     overflow-y: auto;
   }
+
   .dropdown-submenu-btn {
     display: flex;
     justify-content: space-between;
     width: 100%;
   }
+
   .dropdown-submenu-item {
     list-style-type: none;
   }
@@ -556,10 +607,12 @@ a:hover{
   padding: 8px 12px;
   border-radius: 6px;
 }
+
 .apartment-popup {
   position: absolute;
   top: 0;
-  left: calc(100% + 10px); /* Sát ngay bên phải menu con */
+  left: calc(100% + 10px);
+  /* Sát ngay bên phải menu con */
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 6px;
