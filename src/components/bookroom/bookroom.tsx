@@ -230,7 +230,9 @@ const Booking: React.FC = () => {
      =================================== */
 
   const currentMonth = useMemo(() => {
+    // ⭐ FIX: Sử dụng ngày 1 để tránh lỗi khi tháng có số ngày khác nhau
     const date = new Date();
+    date.setDate(1); // Đặt ngày = 1 trước
     date.setMonth(date.getMonth() + currentMonthIndex);
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -244,7 +246,9 @@ const Booking: React.FC = () => {
   }, [currentMonthIndex]);
 
   const nextMonth = useMemo(() => {
+    // ⭐ FIX: Sử dụng ngày 1 để tránh lỗi khi tháng có số ngày khác nhau
     const date = new Date();
+    date.setDate(1); // Đặt ngày = 1 trước
     date.setMonth(date.getMonth() + currentMonthIndex + 1);
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -726,6 +730,10 @@ const Booking: React.FC = () => {
             const isExpanded = expanded[room.id];
 
             const availability = availabilityData[room.id];
+            console.log(`Room ${room.id}:`, {
+              totalImages: room.images?.length,
+              images: room.images
+            });
             return (
               <div key={room.id} className="room-section">
                 <div className="room-header">
@@ -774,7 +782,7 @@ const Booking: React.FC = () => {
                     <h2>{room.name}</h2>
 
                     <div className="room-specs">
-                      <span>Sleeps {room.maxAdults + room.maxChildren}</span>
+                      <span>👤Sleeps {room.maxAdults + room.maxChildren}</span>
                       <span>{room.maxAdults} người lớn</span>
                       <span>{room.maxChildren} trẻ em</span>
                     </div>
